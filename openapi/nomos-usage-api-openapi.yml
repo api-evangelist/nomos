@@ -1,0 +1,1702 @@
+openapi: 3.0.0
+info:
+  title: Nomos Authentication Usage API
+  version: 2026-05-27.curie
+servers:
+- url: https://api.nomos.energy
+  description: production
+tags:
+- name: Usage
+paths:
+  /subscriptions/{id}/usage:
+    get:
+      tags:
+      - Usage
+      summary: Retrieve usage data
+      description: 'Retrieve the usage data for a subscription. Usage is the electricity consumed from the grid, or fed into the grid for feed-in subscriptions. Values are positive magnitudes for both directions; the direction comes from the plan. Results depend on the meter type.
+
+
+        **Smart meters**:
+
+        Usage data becomes available from 4pm on the following day. Metering Service Providers (MSB) might share preliminary values until replaced by final values up to the 8th working day of the following month. Data is available as soon as provided by the responsible MSB. Delays or missing data may occur.
+
+
+        **Analog meters**:
+
+        Data is based on meter readings by customers and MSBs and available on a monthly level. In the absence of metering readings, Nomos creates a preliminary estimation at the end of each month. Subsequent meter readings take precedence over existing estimates and trigger invoice corrections if applicable.'
+      security:
+      - Bearer: []
+      parameters:
+      - schema:
+          type: string
+          example: sub_ig1f5x45789r3ax7dlfff4q4
+        required: true
+        name: id
+        in: path
+      - schema:
+          type: string
+          enum:
+          - auto
+          - 15min
+          - hour
+          - day
+          - week
+          - month
+          default: auto
+          example: auto
+          description: The resolution of the consumption. 'auto' will choose a good resolution based on the start and end date.
+        required: false
+        description: The resolution of the consumption. 'auto' will choose a good resolution based on the start and end date.
+        name: resolution
+        in: query
+      - schema:
+          type: string
+          pattern: ^\d{4}-\d{2}-\d{2}$
+          example: '2025-03-30'
+          description: "The start date of the interval (inclusive). Defaults depend on the meter type.  \n        **Smart meters**: yesterday start of day (00:00:00) in the customers's timezone.\n        **Analog meters**: subscription start date or 12 months ago, whichever is later."
+        required: false
+        description: "The start date of the interval (inclusive). Defaults depend on the meter type.  \n        **Smart meters**: yesterday start of day (00:00:00) in the customers's timezone.\n        **Analog meters**: subscription start date or 12 months ago, whichever is later."
+        name: start
+        in: query
+      - schema:
+          type: string
+          pattern: ^\d{4}-\d{2}-\d{2}$
+          example: '2025-03-31'
+          description: "The end date of the interval (exclusive). Defaults depend on the meter type. \n        **Smart meters**: today start of day (00:00:00) in the customers's timezone.\n        **Analog meters**: latest available reading date."
+        required: false
+        description: "The end date of the interval (exclusive). Defaults depend on the meter type. \n        **Smart meters**: today start of day (00:00:00) in the customers's timezone.\n        **Analog meters**: latest available reading date."
+        name: end
+        in: query
+      responses:
+        '200':
+          description: Retrieve the subscription usage
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    enum:
+                    - usage
+                  meter_type:
+                    type: string
+                    enum:
+                    - analog
+                    - smart
+                    example: smart
+                    description: The meter type. Smart meters record consumption data in 15min intervals, analog meter readings only get reported periodically by the metering operator or the customer.
+                  resolution:
+                    type: string
+                    enum:
+                    - 15min
+                    - hour
+                    - day
+                    - week
+                    - month
+                    example: 15min
+                    description: The resolution of the consumption. An optimal resolution will be chosen based on the start and end date if no `resolution` is provided in the query params.
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        start:
+                          type: string
+                          format: date-time
+                          description: The start date of the consumption interval
+                        usage:
+                          type: number
+                          description: Consumption in kWh in the interval
+                        type:
+                          type: string
+                          enum:
+                          - final
+                          - preliminary
+                          description: Preliminary values are still subject to change
+                      required:
+                      - start
+                      - usage
+                      - type
+                    example:
+                    - start: '2025-03-31T22:00:00.000Z'
+                      usage: 0.2
+                      type: final
+                    - start: '2025-03-31T22:15:00.000Z'
+                      usage: 0.15
+                      type: final
+                    - start: '2025-03-31T22:30:00.000Z'
+                      usage: 0.18
+                      type: final
+                    - start: '2025-03-31T22:45:00.000Z'
+                      usage: 0.12
+                      type: final
+                    - start: '2025-03-31T23:00:00.000Z'
+                      usage: 0.1
+                      type: final
+                    - start: '2025-03-31T23:15:00.000Z'
+                      usage: 0.08
+                      type: final
+                    - start: '2025-03-31T23:30:00.000Z'
+                      usage: 0.09
+                      type: final
+                    - start: '2025-03-31T23:45:00.000Z'
+                      usage: 0.11
+                      type: final
+                    - start: '2025-04-01T00:00:00.000Z'
+                      usage: 0.13
+                      type: final
+                    - start: '2025-04-01T00:15:00.000Z'
+                      usage: 0.14
+                      type: final
+                    - start: '2025-04-01T00:30:00.000Z'
+                      usage: 0.16
+                      type: final
+                    - start: '2025-04-01T00:45:00.000Z'
+                      usage: 0.17
+                      type: final
+                    - start: '2025-04-01T01:00:00.000Z'
+                      usage: 0.19
+                      type: final
+                    - start: '2025-04-01T01:15:00.000Z'
+                      usage: 0.21
+                      type: final
+                    - start: '2025-04-01T01:30:00.000Z'
+                      usage: 0.23
+                      type: final
+                    - start: '2025-04-01T01:45:00.000Z'
+                      usage: 0.25
+                      type: final
+                    - start: '2025-04-01T02:00:00.000Z'
+                      usage: 0.28
+                      type: final
+                    - start: '2025-04-01T02:15:00.000Z'
+                      usage: 0.31
+                      type: final
+                    - start: '2025-04-01T02:30:00.000Z'
+                      usage: 0.34
+                      type: final
+                    - start: '2025-04-01T02:45:00.000Z'
+                      usage: 0.37
+                      type: final
+                    - start: '2025-04-01T03:00:00.000Z'
+                      usage: 0.41
+                      type: final
+                    - start: '2025-04-01T03:15:00.000Z'
+                      usage: 0.45
+                      type: final
+                    - start: '2025-04-01T03:30:00.000Z'
+                      usage: 0.49
+                      type: final
+                    - start: '2025-04-01T03:45:00.000Z'
+                      usage: 0.53
+                      type: final
+                    - start: '2025-04-01T04:00:00.000Z'
+                      usage: 0.58
+                      type: final
+                    - start: '2025-04-01T04:15:00.000Z'
+                      usage: 0.63
+                      type: final
+                    - start: '2025-04-01T04:30:00.000Z'
+                      usage: 0.68
+                      type: final
+                    - start: '2025-04-01T04:45:00.000Z'
+                      usage: 0.73
+                      type: final
+                    - start: '2025-04-01T05:00:00.000Z'
+                      usage: 0.79
+                      type: final
+                    - start: '2025-04-01T05:15:00.000Z'
+                      usage: 0.85
+                      type: final
+                    - start: '2025-04-01T05:30:00.000Z'
+                      usage: 0.91
+                      type: final
+                    - start: '2025-04-01T05:45:00.000Z'
+                      usage: 0.97
+                      type: final
+                    - start: '2025-04-01T06:00:00.000Z'
+                      usage: 1.04
+                      type: final
+                    - start: '2025-04-01T06:15:00.000Z'
+                      usage: 1.11
+                      type: final
+                    - start: '2025-04-01T06:30:00.000Z'
+                      usage: 1.18
+                      type: final
+                    - start: '2025-04-01T06:45:00.000Z'
+                      usage: 1.25
+                      type: final
+                    - start: '2025-04-01T07:00:00.000Z'
+                      usage: 1.32
+                      type: final
+                    - start: '2025-04-01T07:15:00.000Z'
+                      usage: 1.39
+                      type: final
+                    - start: '2025-04-01T07:30:00.000Z'
+                      usage: 1.46
+                      type: final
+                    - start: '2025-04-01T07:45:00.000Z'
+                      usage: 1.53
+                      type: final
+                    - start: '2025-04-01T08:00:00.000Z'
+                      usage: 1.6
+                      type: final
+                    - start: '2025-04-01T08:15:00.000Z'
+                      usage: 1.67
+                      type: final
+                    - start: '2025-04-01T08:30:00.000Z'
+                      usage: 1.74
+                      type: final
+                    - start: '2025-04-01T08:45:00.000Z'
+                      usage: 1.81
+                      type: final
+                    - start: '2025-04-01T09:00:00.000Z'
+                      usage: 1.88
+                      type: final
+                    - start: '2025-04-01T09:15:00.000Z'
+                      usage: 1.95
+                      type: final
+                    - start: '2025-04-01T09:30:00.000Z'
+                      usage: 2.02
+                      type: final
+                    - start: '2025-04-01T09:45:00.000Z'
+                      usage: 2.09
+                      type: final
+                    - start: '2025-04-01T10:00:00.000Z'
+                      usage: 2.16
+                      type: final
+                    - start: '2025-04-01T10:15:00.000Z'
+                      usage: 2.23
+                      type: final
+                    - start: '2025-04-01T10:30:00.000Z'
+                      usage: 2.3
+                      type: final
+                    - start: '2025-04-01T10:45:00.000Z'
+                      usage: 2.37
+                      type: final
+                    - start: '2025-04-01T11:00:00.000Z'
+                      usage: 2.44
+                      type: final
+                    - start: '2025-04-01T11:15:00.000Z'
+                      usage: 2.51
+                      type: final
+                    - start: '2025-04-01T11:30:00.000Z'
+                      usage: 2.58
+                      type: final
+                    - start: '2025-04-01T11:45:00.000Z'
+                      usage: 2.65
+                      type: final
+                    - start: '2025-04-01T12:00:00.000Z'
+                      usage: 2.72
+                      type: final
+                    - start: '2025-04-01T12:15:00.000Z'
+                      usage: 2.79
+                      type: final
+                    - start: '2025-04-01T12:30:00.000Z'
+                      usage: 2.86
+                      type: final
+                    - start: '2025-04-01T12:45:00.000Z'
+                      usage: 2.93
+                      type: final
+                    - start: '2025-04-01T13:00:00.000Z'
+                      usage: 3
+                      type: final
+                    - start: '2025-04-01T13:15:00.000Z'
+                      usage: 3.07
+                      type: final
+                    - start: '2025-04-01T13:30:00.000Z'
+                      usage: 3.14
+                      type: final
+                    - start: '2025-04-01T13:45:00.000Z'
+                      usage: 3.21
+                      type: final
+                    - start: '2025-04-01T14:00:00.000Z'
+                      usage: 3.28
+                      type: final
+                    - start: '2025-04-01T14:15:00.000Z'
+                      usage: 3.35
+                      type: final
+                    - start: '2025-04-01T14:30:00.000Z'
+                      usage: 3.42
+                      type: final
+                    - start: '2025-04-01T14:45:00.000Z'
+                      usage: 3.49
+                      type: final
+                    - start: '2025-04-01T15:00:00.000Z'
+                      usage: 3.56
+                      type: final
+                    - start: '2025-04-01T15:15:00.000Z'
+                      usage: 3.63
+                      type: final
+                    - start: '2025-04-01T15:30:00.000Z'
+                      usage: 3.7
+                      type: final
+                    - start: '2025-04-01T15:45:00.000Z'
+                      usage: 3.77
+                      type: final
+                    - start: '2025-04-01T16:00:00.000Z'
+                      usage: 3.84
+                      type: final
+                    - start: '2025-04-01T16:15:00.000Z'
+                      usage: 3.91
+                      type: final
+                    - start: '2025-04-01T16:30:00.000Z'
+                      usage: 3.98
+                      type: final
+                    - start: '2025-04-01T16:45:00.000Z'
+                      usage: 4.05
+                      type: final
+                    - start: '2025-04-01T17:00:00.000Z'
+                      usage: 4.12
+                      type: final
+                    - start: '2025-04-01T17:15:00.000Z'
+                      usage: 4.19
+                      type: final
+                    - start: '2025-04-01T17:30:00.000Z'
+                      usage: 4.26
+                      type: final
+                    - start: '2025-04-01T17:45:00.000Z'
+                      usage: 4.33
+                      type: final
+                    - start: '2025-04-01T18:00:00.000Z'
+                      usage: 4.4
+                      type: final
+                    - start: '2025-04-01T18:15:00.000Z'
+                      usage: 4.47
+                      type: final
+                    - start: '2025-04-01T18:30:00.000Z'
+                      usage: 4.54
+                      type: final
+                    - start: '2025-04-01T18:45:00.000Z'
+                      usage: 4.61
+                      type: final
+                    - start: '2025-04-01T19:00:00.000Z'
+                      usage: 4.68
+                      type: final
+                    - start: '2025-04-01T19:15:00.000Z'
+                      usage: 4.75
+                      type: final
+                    - start: '2025-04-01T19:30:00.000Z'
+                      usage: 4.82
+                      type: final
+                    - start: '2025-04-01T19:45:00.000Z'
+                      usage: 4.89
+                      type: final
+                    - start: '2025-04-01T20:00:00.000Z'
+                      usage: 4.96
+                      type: final
+                    - start: '2025-04-01T20:15:00.000Z'
+                      usage: 5.03
+                      type: final
+                    - start: '2025-04-01T20:30:00.000Z'
+                      usage: 5.1
+                      type: final
+                    - start: '2025-04-01T20:45:00.000Z'
+                      usage: 5.17
+                      type: final
+                    - start: '2025-04-01T21:00:00.000Z'
+                      usage: 5.24
+                      type: final
+                    - start: '2025-04-01T21:15:00.000Z'
+                      usage: 5.31
+                      type: final
+                    - start: '2025-04-01T21:30:00.000Z'
+                      usage: 5.38
+                      type: final
+                    - start: '2025-04-01T21:45:00.000Z'
+                      usage: 5.45
+                      type: final
+                    description: The consumption of the meter
+                required:
+                - object
+                - meter_type
+                - resolution
+                - data
+        '400':
+          description: The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrBadRequest'
+        '401':
+          description: The client must authenticate itself to get the requested response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrUnauthorized'
+        '402':
+          description: A higher pricing plan is required to access the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrPaymentRequired'
+        '403':
+          description: The client does not have the necessary permissions to access the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrForbidden'
+        '404':
+          description: The server can't find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrNotFound'
+        '405':
+          description: The request method is not allowed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMethodNotAllowed'
+        '409':
+          description: The request could not be completed due to a conflict mainly due to unique constraints.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrConflict'
+        '422':
+          description: The request was well-formed but was unable to be followed due to semantic errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrUnprocessableEntity'
+        '429':
+          description: The client has sent too many requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrTooManyRequests'
+        '500':
+          description: The server has encountered a situation it doesn't know how to handle.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrInternalServerError'
+  /meter-readings:
+    get:
+      tags:
+      - Usage
+      summary: List meter readings
+      description: Retrieve all meter readings for the organization with cursor pagination. Customer users will only see their own. Use filter[subscription][eq]=<id> to scope to a single subscription.
+      security:
+      - Bearer: []
+      parameters:
+      - schema:
+          type: string
+          nullable: true
+        required: false
+        name: cursor
+        in: query
+      - schema:
+          type: number
+          minimum: 1
+          maximum: 100
+          default: 10
+        required: false
+        name: limit
+        in: query
+      - schema:
+          nullable: true
+          description: '**Filterable fields:**
+
+            - `type` (string)
+
+            - `subscription` (string)
+
+            - `created_at` (date)
+
+
+            See [Filtering Documentation](https://docs.nomos.energy/guides/filtering) for supported operators and syntax.'
+          example: value
+        required: false
+        description: '**Filterable fields:**
+
+          - `type` (string)
+
+          - `subscription` (string)
+
+          - `created_at` (date)
+
+
+          See [Filtering Documentation](https://docs.nomos.energy/guides/filtering) for supported operators and syntax.'
+        name: filter[field][operator]
+        in: query
+      responses:
+        '200':
+          description: Retrieve all meter readings for the organization with cursor pagination. Customer users will only see their own. Use filter[subscription][eq]=<id> to scope to a single subscription.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    enum:
+                    - list
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MeterReading'
+                  next_page:
+                    type: string
+                    nullable: true
+                    example: eyJsYXN0X2NyZWF0ZWRfYXQiOiIyMDI1LTAxLTE1VDEwOjMwOjAwLjAwMFoiLCJsYXN0X2lkIjoic3ViX21pNGYwb2RhNng5bTdnY3N2amswb2xlMSIsImxpbWl0IjoyMH0=
+                  has_more:
+                    type: boolean
+                    default: false
+                required:
+                - object
+                - items
+        '400':
+          description: The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrBadRequest'
+        '401':
+          description: The client must authenticate itself to get the requested response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrUnauthorized'
+        '402':
+          description: A higher pricing plan is required to access the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrPaymentRequired'
+        '403':
+          description: The client does not have the necessary permissions to access the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrForbidden'
+        '404':
+          description: The server can't find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrNotFound'
+        '405':
+          description: The request method is not allowed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMethodNotAllowed'
+        '409':
+          description: The request could not be completed due to a conflict mainly due to unique constraints.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrConflict'
+        '422':
+          description: The request was well-formed but was unable to be followed due to semantic errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrUnprocessableEntity'
+        '429':
+          description: The client has sent too many requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrTooManyRequests'
+        '500':
+          description: The server has encountered a situation it doesn't know how to handle.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrInternalServerError'
+    post:
+      tags:
+      - Usage
+      summary: Create a meter reading
+      description: Submit a customer-reported analog meter reading for the active meter of a subscription.
+      security:
+      - Bearer: []
+      requestBody:
+        description: Meter reading input
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/InsertMeterReading'
+              - type: object
+                properties:
+                  subscription:
+                    type: string
+                    description: The subscription the meter reading belongs to
+                    example: sub_rocbrf1u5e48mm0reeqoag90
+                required:
+                - subscription
+      responses:
+        '200':
+          description: Meter reading accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterReading'
+        '400':
+          description: The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrBadRequest'
+        '401':
+          description: The client must authenticate itself to get the requested response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrUnauthorized'
+        '402':
+          description: A higher pricing plan is required to access the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrPaymentRequired'
+        '403':
+          description: The client does not have the necessary permissions to access the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrForbidden'
+        '404':
+          description: The server can't find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrNotFound'
+        '405':
+          description: The request method is not allowed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMethodNotAllowed'
+        '409':
+          description: The request could not be completed due to a conflict mainly due to unique constraints.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrConflict'
+        '422':
+          description: The request was well-formed but was unable to be followed due to semantic errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrUnprocessableEntity'
+        '429':
+          description: The client has sent too many requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrTooManyRequests'
+        '500':
+          description: The server has encountered a situation it doesn't know how to handle.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrInternalServerError'
+  /load-forecasts:
+    post:
+      tags:
+      - Usage
+      summary: Create a load forecast
+      description: This endpoint is used to transmit a load forecast for a subscription. Values must be submitted by 9:00 a.m. local time on the previous day to be considered in the day-ahead auction, and at least 15 minutes before delivery to be included in continuous intraday trading. Data points must be strictly consecutive and can only be provided for full days at a time (local time of the subscription).
+      security:
+      - Bearer: []
+      requestBody:
+        description: Load forecast input
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scope:
+                  type: string
+                  enum:
+                  - subscription
+                  description: Reference point for the load forecast
+                  example: subscription
+                subscription:
+                  type: string
+                  description: Required subscription ID when scope is 'subscription'
+                  example: sub_123456789
+                resolution:
+                  type: string
+                  enum:
+                  - 15min
+                  description: Time resolution of the load forecast data points
+                  example: 15min
+                unit:
+                  type: string
+                  enum:
+                  - KW
+                  description: Unit of measurement for the forecast values
+                  example: KW
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      start:
+                        type: string
+                        format: date-time
+                        description: Timestamp of the data point
+                        example: '2025-03-31T22:00:00.000Z'
+                      value:
+                        type: number
+                        minimum: 0
+                        description: Power value at this timestamp. Must not be negative.
+                        example: 0.2
+                    required:
+                    - start
+                    - value
+                  description: Array of load forecast data points. Must be strictly consecutive with exactly 15-minute intervals and without overlaps or gaps and can only contain one data point per 15-minute interval.
+                  example:
+                  - start: '2025-03-31T22:00:00.000Z'
+                    value: 0.2
+                  - start: '2025-03-31T22:15:00.000Z'
+                    value: 0.22
+              required:
+              - scope
+              - subscription
+              - resolution
+              - unit
+              - data
+      responses:
+        '200':
+          description: Positive response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoadForecasts'
+        '400':
+          description: The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrBadRequest'
+        '401':
+          description: The client must authenticate itself to get the requested response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrUnauthorized'
+        '402':
+          description: A higher pricing plan is required to access the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrPaymentRequired'
+        '403':
+          description: The client does not have the necessary permissions to access the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrForbidden'
+        '404':
+          description: The server can't find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrNotFound'
+        '405':
+          description: The request method is not allowed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMethodNotAllowed'
+        '409':
+          description: The request could not be completed due to a conflict mainly due to unique constraints.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrConflict'
+        '422':
+          description: The request was well-formed but was unable to be followed due to semantic errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrUnprocessableEntity'
+        '429':
+          description: The client has sent too many requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrTooManyRequests'
+        '500':
+          description: The server has encountered a situation it doesn't know how to handle.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrInternalServerError'
+components:
+  schemas:
+    InsertMeterReading:
+      type: object
+      properties:
+        value:
+          type: number
+          minimum: 0
+          exclusiveMinimum: true
+          description: Cumulative meter value in kWh
+          example: 150
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the reading in UTC
+          example: '2024-03-14T12:00:00Z'
+        message:
+          type: string
+          maxLength: 500
+          description: Optional message from the submitter
+          example: Reading to start the subscription
+      required:
+      - value
+      - timestamp
+    ErrUnauthorized:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - UNAUTHORIZED
+          description: The error code related to the status code.
+          example: UNAUTHORIZED
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Invalid or malformed token
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/UNAUTHORIZED
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    MeterReading:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - meter_reading
+        id:
+          type: string
+          description: The unique identifier for the meter reading
+          example: mr_rocbrf1u5e48mm0reeqoag90
+        customer:
+          type: string
+          description: The unique identifier for the customer
+          example: cus_a8n8ol7yd4h0wohx824f0bui
+        subscription:
+          type: string
+          description: The unique identifier for the subscription
+          example: sub_rocbrf1u5e48mm0reeqoag90
+        meter:
+          type: string
+          description: The unique identifier for the meter
+          example: mtr_azk4zue2ijx4ff1dbjt14m5h
+        value:
+          type: number
+          description: The value of the meter reading
+          example: 150
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp get's always adjusted to the start of the day in Europe/Berlin
+        type:
+          type: string
+          enum:
+          - customer_report
+          - grid_reading
+          - grid_estimation
+          description: The type of the meter reading
+          example: customer_report
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - object
+      - id
+      - customer
+      - subscription
+      - meter
+      - value
+      - timestamp
+      - type
+      - created_at
+    ErrInternalServerError:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - INTERNAL_SERVER_ERROR
+          description: The error code related to the status code.
+          example: INTERNAL_SERVER_ERROR
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Internal Server Error
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/INTERNAL_SERVER_ERROR
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrConflict:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - CONFLICT
+          description: The error code related to the status code.
+          example: CONFLICT
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Resource already exists
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/CONFLICT
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrNotFound:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - NOT_FOUND
+          description: The error code related to the status code.
+          example: NOT_FOUND
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Resource not found
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/NOT_FOUND
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    LoadForecasts:
+      type: object
+      properties:
+        scope:
+          type: string
+          enum:
+          - subscription
+        subscription:
+          type: string
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        total:
+          type: number
+      required:
+      - scope
+      - subscription
+      - start
+      - end
+      - total
+    ErrUnprocessableEntity:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - UNPROCESSABLE_ENTITY
+          description: The error code related to the status code.
+          example: UNPROCESSABLE_ENTITY
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: 'invalid_enum_value in ''status'': Invalid enum value. Expected ''pending'' | ''active'' | ''ended'''
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/UNPROCESSABLE_ENTITY
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrBadRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - BAD_REQUEST
+          description: The error code related to the status code.
+          example: BAD_REQUEST
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: 'invalid_type in ''end'': Required'
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/BAD_REQUEST
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrPaymentRequired:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - PAYMENT_REQUIRED
+          description: The error code related to the status code.
+          example: PAYMENT_REQUIRED
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Payment required
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/PAYMENT_REQUIRED
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrTooManyRequests:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - TOO_MANY_REQUESTS
+          description: The error code related to the status code.
+          example: TOO_MANY_REQUESTS
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Wait 30 seconds before retrying.
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/TOO_MANY_REQUESTS
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrForbidden:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - FORBIDDEN
+          description: The error code related to the status code.
+          example: FORBIDDEN
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: You are not allowed to access this resource
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/FORBIDDEN
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrMethodNotAllowed:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - METHOD_NOT_ALLOWED
+          description: The error code related to the status code.
+          example: METHOD_NOT_ALLOWED
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Method not allowed
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/METHOD_NOT_ALLOWED
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    Basic:
+      type: http
+      scheme: basic

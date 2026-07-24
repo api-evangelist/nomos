@@ -1,0 +1,1649 @@
+openapi: 3.0.0
+info:
+  title: Nomos Authentication Events API
+  version: 2026-05-27.curie
+servers:
+- url: https://api.nomos.energy
+  description: production
+tags:
+- name: Events
+paths:
+  /events/{id}:
+    get:
+      tags:
+      - Events
+      summary: Retrieve an event
+      description: Retrieve event details by their id
+      security:
+      - Bearer: []
+      parameters:
+      - schema:
+          type: string
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Retrieve the event details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrBadRequest'
+        '401':
+          description: The client must authenticate itself to get the requested response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrUnauthorized'
+        '402':
+          description: A higher pricing plan is required to access the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrPaymentRequired'
+        '403':
+          description: The client does not have the necessary permissions to access the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrForbidden'
+        '404':
+          description: The server can't find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrNotFound'
+        '405':
+          description: The request method is not allowed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrMethodNotAllowed'
+        '409':
+          description: The request could not be completed due to a conflict mainly due to unique constraints.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrConflict'
+        '422':
+          description: The request was well-formed but was unable to be followed due to semantic errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrUnprocessableEntity'
+        '429':
+          description: The client has sent too many requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrTooManyRequests'
+        '500':
+          description: The server has encountered a situation it doesn't know how to handle.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrInternalServerError'
+components:
+  schemas:
+    invoice.voided:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - invoice.voided
+          description: Event type identifier
+          example: invoice.voided
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            invoice:
+              type: string
+              description: ID of the invoice that was voided
+              example: inv_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the invoice belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+            voiding_invoice:
+              type: string
+              description: ID of the offsetting voiding invoice
+              example: inv_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - invoice
+          - subscription
+          - voiding_invoice
+          description: The context of the `invoice.voided` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    ErrUnauthorized:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - UNAUTHORIZED
+          description: The error code related to the status code.
+          example: UNAUTHORIZED
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Invalid or malformed token
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/UNAUTHORIZED
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrInternalServerError:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - INTERNAL_SERVER_ERROR
+          description: The error code related to the status code.
+          example: INTERNAL_SERVER_ERROR
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Internal Server Error
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/INTERNAL_SERVER_ERROR
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    meter_order.activated:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - meter_order.activated
+          description: Event type identifier
+          example: meter_order.activated
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            meter_order:
+              type: string
+              description: ID of the smart meter order whose meter was activated
+              example: prdo_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the smart meter order belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - meter_order
+          - subscription
+          description: The context of the `meter_order.activated` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    ErrBadRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - BAD_REQUEST
+          description: The error code related to the status code.
+          example: BAD_REQUEST
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: 'invalid_type in ''end'': Required'
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/BAD_REQUEST
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    subscription.ended:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - subscription.ended
+          description: Event type identifier
+          example: subscription.ended
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            subscription:
+              type: string
+              description: ID of the subscription that was ended
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - subscription
+          description: The context of the `subscription.ended` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    meter_order.installed:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - meter_order.installed
+          description: Event type identifier
+          example: meter_order.installed
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            meter_order:
+              type: string
+              description: ID of the smart meter order whose meter was installed
+              example: prdo_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the smart meter order belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - meter_order
+          - subscription
+          description: The context of the `meter_order.installed` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    subscription.created:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - subscription.created
+          description: Event type identifier
+          example: subscription.created
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            subscription:
+              type: string
+              description: ID of the subscription that was created
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+            lead:
+              type: string
+              description: ID of the lead that was converted to this subscription (if applicable)
+              example: lead_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - subscription
+          description: The context of the `subscription.created` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    Event:
+      oneOf:
+      - $ref: '#/components/schemas/subscription.created'
+      - $ref: '#/components/schemas/subscription.confirmed'
+      - $ref: '#/components/schemas/subscription.activated'
+      - $ref: '#/components/schemas/subscription.ended'
+      - $ref: '#/components/schemas/subscription.terminated'
+      - $ref: '#/components/schemas/invoice.created'
+      - $ref: '#/components/schemas/invoice.paid'
+      - $ref: '#/components/schemas/invoice.payment_failed'
+      - $ref: '#/components/schemas/invoice.voided'
+      - $ref: '#/components/schemas/invoice.uncollectible'
+      - $ref: '#/components/schemas/meter_order.created'
+      - $ref: '#/components/schemas/meter_order.placed'
+      - $ref: '#/components/schemas/meter_order.check_submitted'
+      - $ref: '#/components/schemas/meter_order.check_reviewed'
+      - $ref: '#/components/schemas/meter_order.scheduled'
+      - $ref: '#/components/schemas/meter_order.installed'
+      - $ref: '#/components/schemas/meter_order.activated'
+      - $ref: '#/components/schemas/meter_order.blocked'
+      - $ref: '#/components/schemas/meter_order.cancelled'
+      discriminator:
+        propertyName: topic
+        mapping:
+          subscription.created: '#/components/schemas/subscription.created'
+          subscription.confirmed: '#/components/schemas/subscription.confirmed'
+          subscription.activated: '#/components/schemas/subscription.activated'
+          subscription.ended: '#/components/schemas/subscription.ended'
+          subscription.terminated: '#/components/schemas/subscription.terminated'
+          invoice.created: '#/components/schemas/invoice.created'
+          invoice.paid: '#/components/schemas/invoice.paid'
+          invoice.payment_failed: '#/components/schemas/invoice.payment_failed'
+          invoice.voided: '#/components/schemas/invoice.voided'
+          invoice.uncollectible: '#/components/schemas/invoice.uncollectible'
+          meter_order.created: '#/components/schemas/meter_order.created'
+          meter_order.placed: '#/components/schemas/meter_order.placed'
+          meter_order.check_submitted: '#/components/schemas/meter_order.check_submitted'
+          meter_order.check_reviewed: '#/components/schemas/meter_order.check_reviewed'
+          meter_order.scheduled: '#/components/schemas/meter_order.scheduled'
+          meter_order.installed: '#/components/schemas/meter_order.installed'
+          meter_order.activated: '#/components/schemas/meter_order.activated'
+          meter_order.blocked: '#/components/schemas/meter_order.blocked'
+          meter_order.cancelled: '#/components/schemas/meter_order.cancelled'
+    ErrUnprocessableEntity:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - UNPROCESSABLE_ENTITY
+          description: The error code related to the status code.
+          example: UNPROCESSABLE_ENTITY
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: 'invalid_enum_value in ''status'': Invalid enum value. Expected ''pending'' | ''active'' | ''ended'''
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/UNPROCESSABLE_ENTITY
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrPaymentRequired:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - PAYMENT_REQUIRED
+          description: The error code related to the status code.
+          example: PAYMENT_REQUIRED
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Payment required
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/PAYMENT_REQUIRED
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    subscription.terminated:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - subscription.terminated
+          description: Event type identifier
+          example: subscription.terminated
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            subscription:
+              type: string
+              description: ID of the subscription that was terminated (cancelled)
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - subscription
+          description: The context of the `subscription.terminated` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    subscription.activated:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - subscription.activated
+          description: Event type identifier
+          example: subscription.activated
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            subscription:
+              type: string
+              description: ID of the subscription that was active
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - subscription
+          description: The context of the `subscription.activated` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    meter_order.check_submitted:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - meter_order.check_submitted
+          description: Event type identifier
+          example: meter_order.check_submitted
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            meter_order:
+              type: string
+              description: ID of the smart meter order whose check request was submitted
+              example: prdo_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the smart meter order belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - meter_order
+          - subscription
+          description: The context of the `meter_order.check_submitted` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    invoice.created:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - invoice.created
+          description: Event type identifier
+          example: invoice.created
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            invoice:
+              type: string
+              description: ID of the invoice that was created
+              example: inv_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the invoice belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - invoice
+          - subscription
+          description: The context of the `invoice.created` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    meter_order.scheduled:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - meter_order.scheduled
+          description: Event type identifier
+          example: meter_order.scheduled
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            meter_order:
+              type: string
+              description: ID of the smart meter order that was scheduled for installation
+              example: prdo_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the smart meter order belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - meter_order
+          - subscription
+          description: The context of the `meter_order.scheduled` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    ErrConflict:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - CONFLICT
+          description: The error code related to the status code.
+          example: CONFLICT
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Resource already exists
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/CONFLICT
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    meter_order.blocked:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - meter_order.blocked
+          description: Event type identifier
+          example: meter_order.blocked
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            meter_order:
+              type: string
+              description: ID of the smart meter order that was blocked
+              example: prdo_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the smart meter order belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - meter_order
+          - subscription
+          description: The context of the `meter_order.blocked` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    invoice.uncollectible:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - invoice.uncollectible
+          description: Event type identifier
+          example: invoice.uncollectible
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            invoice:
+              type: string
+              description: ID of the invoice that was marked uncollectible
+              example: inv_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the invoice belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - invoice
+          - subscription
+          description: The context of the `invoice.uncollectible` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    invoice.paid:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - invoice.paid
+          description: Event type identifier
+          example: invoice.paid
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            invoice:
+              type: string
+              description: ID of the invoice that was paid
+              example: inv_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the invoice belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - invoice
+          - subscription
+          description: The context of the `invoice.paid` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    meter_order.check_reviewed:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - meter_order.check_reviewed
+          description: Event type identifier
+          example: meter_order.check_reviewed
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            meter_order:
+              type: string
+              description: ID of the smart meter order whose check was reviewed by the meter provider
+              example: prdo_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the smart meter order belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - meter_order
+          - subscription
+          description: The context of the `meter_order.check_reviewed` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    invoice.payment_failed:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - invoice.payment_failed
+          description: Event type identifier
+          example: invoice.payment_failed
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            invoice:
+              type: string
+              description: ID of the invoice whose payment attempt failed
+              example: inv_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the invoice belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - invoice
+          - subscription
+          description: The context of the `invoice.payment_failed` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    subscription.confirmed:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - subscription.confirmed
+          description: Event type identifier
+          example: subscription.confirmed
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            subscription:
+              type: string
+              description: ID of the subscription that was confirmed
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - subscription
+          description: The context of the `subscription.confirmed` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    ErrForbidden:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - FORBIDDEN
+          description: The error code related to the status code.
+          example: FORBIDDEN
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: You are not allowed to access this resource
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/FORBIDDEN
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrNotFound:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - NOT_FOUND
+          description: The error code related to the status code.
+          example: NOT_FOUND
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Resource not found
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/NOT_FOUND
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    meter_order.cancelled:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - meter_order.cancelled
+          description: Event type identifier
+          example: meter_order.cancelled
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            meter_order:
+              type: string
+              description: ID of the smart meter order that was cancelled
+              example: prdo_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the smart meter order belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - meter_order
+          - subscription
+          description: The context of the `meter_order.cancelled` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    meter_order.created:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - meter_order.created
+          description: Event type identifier
+          example: meter_order.created
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            meter_order:
+              type: string
+              description: ID of the smart meter order that was created
+              example: prdo_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the smart meter order belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - meter_order
+          - subscription
+          description: The context of the `meter_order.created` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    ErrTooManyRequests:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - TOO_MANY_REQUESTS
+          description: The error code related to the status code.
+          example: TOO_MANY_REQUESTS
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Wait 30 seconds before retrying.
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/TOO_MANY_REQUESTS
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    meter_order.placed:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the webhook event
+          example: evt_mi4f0oda6x9m7gcsvjk0ole1
+        topic:
+          type: string
+          enum:
+          - meter_order.placed
+          description: Event type identifier
+          example: meter_order.placed
+        timestamp:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          description: Timestamp when the event was created
+          example: '2024-03-14T12:00:00Z'
+        context:
+          type: object
+          properties:
+            meter_order:
+              type: string
+              description: ID of the smart meter order that was placed with the meter provider
+              example: prdo_mi4f0oda6x9m7gcsvjk0ole1
+            subscription:
+              type: string
+              description: ID of the subscription the smart meter order belongs to
+              example: sub_mi4f0oda6x9m7gcsvjk0ole1
+          required:
+          - meter_order
+          - subscription
+          description: The context of the `meter_order.placed` event
+      required:
+      - id
+      - topic
+      - timestamp
+      - context
+    ErrMethodNotAllowed:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - METHOD_NOT_ALLOWED
+          description: The error code related to the status code.
+          example: METHOD_NOT_ALLOWED
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Method not allowed
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/METHOD_NOT_ALLOWED
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    Basic:
+      type: http
+      scheme: basic
