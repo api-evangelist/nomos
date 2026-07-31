@@ -1,0 +1,210 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+source: openapi/nomos-openapi-original.json
+note: No official hosted MCP server was found. Nomos publishes a first-party Agent Skill (see skills/nomos-api.md)
+  instead. This is a candidate tool list derived one-per-operation from the OpenAPI; operationIds are
+  absent in the spec so tools reference METHOD+path.
+server:
+  name: nomos
+  transport: http
+  url: null
+tools:
+- name: list_plans
+  description: List plans
+  method: GET
+  path: /plans
+  tags:
+  - Plans
+- name: get_plans
+  description: Retrieve a plan
+  method: GET
+  path: /plans/{id}
+  tags:
+  - Plans
+- name: get_plans_quote
+  description: Retrieve a quote
+  method: GET
+  path: /plans/{id}/quote
+  tags:
+  - Plans
+- name: list_leads
+  description: List leads
+  method: GET
+  path: /leads
+  tags:
+  - Leads
+- name: create_leads
+  description: Create a lead
+  method: POST
+  path: /leads
+  tags:
+  - Leads
+- name: get_leads
+  description: Retrieve a lead
+  method: GET
+  path: /leads/{id}
+  tags:
+  - Leads
+- name: update_subscriptions
+  description: Update a subscription
+  method: PATCH
+  path: /subscriptions/{id}
+  tags:
+  - Subscriptions
+- name: get_subscriptions
+  description: Retrieve a subscription
+  method: GET
+  path: /subscriptions/{id}
+  tags:
+  - Subscriptions
+- name: create_subscriptions_terminate
+  description: Terminate a subscription
+  method: POST
+  path: /subscriptions/{id}/terminate
+  tags:
+  - Subscriptions
+- name: list_subscriptions
+  description: List subscriptions
+  method: GET
+  path: /subscriptions
+  tags:
+  - Subscriptions
+- name: create_subscriptions
+  description: Create a subscription
+  method: POST
+  path: /subscriptions
+  tags:
+  - Subscriptions
+- name: update_customers
+  description: Update a customer
+  method: PATCH
+  path: /customers/{id}
+  tags:
+  - Customers
+- name: get_customers
+  description: Retrieve a customer
+  method: GET
+  path: /customers/{id}
+  tags:
+  - Customers
+- name: list_customers
+  description: List customers
+  method: GET
+  path: /customers
+  tags:
+  - Customers
+- name: get_subscriptions_usage
+  description: Retrieve usage data
+  method: GET
+  path: /subscriptions/{id}/usage
+  tags:
+  - Usage
+- name: list_meter_readings
+  description: List meter readings
+  method: GET
+  path: /meter-readings
+  tags:
+  - Usage
+- name: create_meter_readings
+  description: Create a meter reading
+  method: POST
+  path: /meter-readings
+  tags:
+  - Usage
+- name: create_load_forecasts
+  description: Create a load forecast
+  method: POST
+  path: /load-forecasts
+  tags:
+  - Usage
+- name: get_subscriptions_prices
+  description: Retrieve a price time series
+  method: GET
+  path: /subscriptions/{id}/prices
+  tags:
+  - Prices
+- name: get_invoices
+  description: Retrieve an invoice
+  method: GET
+  path: /invoices/{id}
+  tags:
+  - Invoices
+- name: list_invoices
+  description: List invoices
+  method: GET
+  path: /invoices
+  tags:
+  - Invoices
+- name: get_invoices_file
+  description: Retrieve an invoice PDF
+  method: GET
+  path: /invoices/{id}/file
+  tags:
+  - Invoices
+- name: get_meter_orders
+  description: Retrieve a smart meter order
+  method: GET
+  path: /meter-orders/{id}
+  tags:
+  - Smart Meter Orders
+- name: list_meter_orders
+  description: List smart meter orders
+  method: GET
+  path: /meter-orders
+  tags:
+  - Smart Meter Orders
+- name: create_meter_orders
+  description: Create a smart meter order
+  method: POST
+  path: /meter-orders
+  tags:
+  - Smart Meter Orders
+- name: list_grid_fee_reductions
+  description: List grid fee reductions
+  method: GET
+  path: /grid-fee-reductions
+  tags:
+  - Grid Fee Reductions
+- name: create_grid_fee_reductions
+  description: Create a grid fee reduction
+  method: POST
+  path: /grid-fee-reductions
+  tags:
+  - Grid Fee Reductions
+- name: get_grid_fee_reductions
+  description: Retrieve a grid fee reduction
+  method: GET
+  path: /grid-fee-reductions/{id}
+  tags:
+  - Grid Fee Reductions
+- name: list_market_partners
+  description: List market partners
+  method: GET
+  path: /market-partners
+  tags:
+  - Market Partners
+- name: get_events
+  description: Retrieve an event
+  method: GET
+  path: /events/{id}
+  tags:
+  - Events
+- name: create_oauth_token
+  description: Create a token
+  method: POST
+  path: /oauth/token
+  tags:
+  - Authentication
+- name: list_oauth_authorize
+  description: Authorize
+  method: GET
+  path: /oauth/authorize
+  tags:
+  - Authentication
+- name: create_admin_magic_link
+  description: Create a magic link (customer portal)
+  method: POST
+  path: /admin/magic_link
+  tags:
+  - Authentication

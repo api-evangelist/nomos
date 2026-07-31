@@ -1,0 +1,33 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.nomos.energy/api-references/versioning
+versioning:
+  scheme: date-codename
+  header: X-API-Version
+  current: 2026-05-27.curie
+  docs: https://docs.nomos.energy/api-references/versioning
+  available:
+  - version: 2026-05-27.curie
+    status: latest-stable
+  - version: 2026-01-29.edison
+    status: previous
+  - version: 2025-12-16.batman
+    status: previous
+  - version: 2025-12-01.chucky
+    status: initial-stable
+deprecation:
+  policy_url: https://docs.nomos.energy/api-references/versioning
+  changelog_url: https://docs.nomos.energy/api-references/changelog
+  model: >-
+    Breaking changes ship only in a new dated version; older versions keep the
+    removed routes and previous response shapes. Renamed/removed routes are
+    documented per version in the changelog (e.g. curie replaced
+    /subscriptions/{id}/invoices with /invoices, /suppliers with
+    /market-partners). Additive changes land in existing versions.
+  sunset_header: false
+health:
+  endpoint: https://api.nomos.energy/health
+  note: 'Plain-text OK health check; Nomos does not publish a dedicated status page.'
+status_page: null
+sla: null
+deprecated_operations: []

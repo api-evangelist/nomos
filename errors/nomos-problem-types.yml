@@ -1,0 +1,101 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/nomos-openapi-original.json
+docs: https://docs.nomos.energy/api-references/errors
+format: custom-envelope
+envelope:
+  fields:
+    code: 'stable machine code (switch on this, not the message)'
+    message: 'human-readable description of the issue'
+    requestId: 'UUID for debugging/support'
+    docs: 'link to the error-code reference page'
+    errors: 'array of per-field validation entries (from 2026-05-27.curie)'
+  content_type: application/json
+  example_docs_url: https://docs.nomos.energy/api-references/errors/BAD_REQUEST
+problems:
+- status: 400
+  code: BAD_REQUEST
+  title: Bad request
+  meaning: Validation failed or unparseable input.
+  remediation: Fix the request; do not retry.
+- status: 401
+  code: UNAUTHORIZED
+  title: Unauthorized
+  meaning: Missing, invalid, or expired token.
+  remediation: Refresh the token and retry.
+- status: 402
+  code: PAYMENT_REQUIRED
+  title: Payment required
+  meaning: Payment required.
+  remediation: Resolve billing/account state.
+- status: 403
+  code: FORBIDDEN
+  title: Forbidden
+  meaning: Valid token without permission, often a scope mismatch (write with read:*).
+  remediation: Use a key with the required scope; do not retry as-is.
+- status: 404
+  code: NOT_FOUND
+  title: Not found
+  meaning: Resource does not exist or is outside your organization.
+  remediation: Check the ID.
+- status: 405
+  code: METHOD_NOT_ALLOWED
+  title: Method not allowed
+  meaning: Wrong HTTP method for the endpoint.
+  remediation: Use the correct method.
+- status: 409
+  code: CONFLICT
+  title: Conflict
+  meaning: A unique value is already taken (resource already exists).
+  remediation: Change the value before retrying.
+- status: 422
+  code: UNPROCESSABLE_ENTITY
+  title: Unprocessable entity
+  meaning: Well-formed request that breaks a business rule.
+  remediation: Read message; do not retry.
+- status: 429
+  code: TOO_MANY_REQUESTS
+  title: Too many requests
+  meaning: Rate limited.
+  remediation: Back off with exponential delay and jitter, then retry.
+- status: 500
+  code: INTERNAL_SERVER_ERROR
+  title: Internal server error
+  meaning: Nomos-side error.
+  remediation: Retry with backoff; if it persists, contact support with requestId.
+validation_error_codes:
+  note: >-
+    A 400 BAD_REQUEST carries an errors[] array; each entry has one of these
+    codes (from ErrBadRequest.errors[].code in the OpenAPI).
+  codes:
+  - invalid_type
+  - too_big
+  - too_small
+  - invalid_format
+  - not_multiple_of
+  - unrecognized_keys
+  - invalid_union
+  - invalid_key
+  - invalid_element
+  - invalid_value
+  - custom
+  - unserviceable_zip
+  - ended_subscription
+  - duplicate_grid_reduction
+  - missing_smart_meter
+  - missing_module_1
+  - unsupported_product
+  - unsupported_meter_order
+  - duplicate_meter_order
+  - unsupported_meter
+  - out_of_period_meter_reading
+  - unsupported_meter_reading
+  - duplicate_meter_reading
+  - implausible_meter_reading
+  - duplicate_customer_email
+  - invalid_iban
+  - upgrade_api_version
+  - withdrawal_not_allowed
+  - invalid_termination_date
+  - subscription_not_started
+retry_policy: 'Retry only 429 and 5xx with backoff. Never retry a 4xx (except 429) without changing the request.'

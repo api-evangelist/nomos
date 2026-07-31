@@ -1,0 +1,46 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.nomos.energy/api-references/authentication
+docs: https://docs.nomos.energy/api-references/authentication
+summary:
+  types:
+  - oauth2
+  - http
+  model: >-
+    OAuth 2.0. Exchange client_id/client_secret for a short-lived JWT bearer
+    access token, then send Authorization: Bearer <token>. Client credentials
+    grant for server-to-server against your own org data; authorization code +
+    PKCE when acting on behalf of an end customer. HTTPS only.
+  oauth2_flows:
+  - clientCredentials
+  - authorizationCode
+  token_ttl_seconds: 3600
+  scopes:
+  - 'read:*'
+  - 'write:*'
+oauth2:
+  authorization_endpoint: https://api.nomos.energy/oauth/authorize
+  token_endpoint: https://api.nomos.energy/oauth/token
+  metadata: https://api.nomos.energy/.well-known/oauth-authorization-server
+  grant_types:
+  - client_credentials
+  - authorization_code
+  - refresh_token
+  pkce: [S256, plain]
+  token_endpoint_auth_methods: [client_secret_basic]
+schemes:
+- name: Bearer
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  note: 'JWT access token obtained via the OAuth 2.0 token endpoint.'
+  sources:
+  - openapi/nomos-openapi-original.json
+- name: Basic
+  type: http
+  scheme: basic
+  note: 'HTTP Basic used at /oauth/token to present client_id:client_secret (client_secret_basic).'
+  sources:
+  - openapi/nomos-openapi-original.json
+see:
+  scopes: scopes/nomos-scopes.yml

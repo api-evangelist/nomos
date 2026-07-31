@@ -1,0 +1,23 @@
+generated: '2026-07-20'
+method: searched
+host: https://api.nomos.energy
+documents:
+- path: /.well-known/oauth-authorization-server
+  status: 200
+  file: nomos-oauth-authorization-server.json
+  note: RFC 8414 OAuth 2.0 Authorization Server Metadata
+- path: /.well-known/openid-configuration
+  status: 401
+  note: API catch-all UNAUTHORIZED, not OIDC metadata
+- path: /.well-known/security.txt
+  status: 401
+- path: /.well-known/api-catalog
+  status: 401
+- path: /.well-known/ai-plugin.json
+  status: null
+  note: not probed / not published
+website_host: https://nomos.energy
+website_documents:
+- path: /.well-known/security.txt
+  status: 307
+  note: redirect, no security.txt served

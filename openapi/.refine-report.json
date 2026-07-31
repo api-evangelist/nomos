@@ -1,0 +1,36 @@
+{
+  "provider": "nomos",
+  "sources": [
+    "nomos-authentication-api-openapi.yml",
+    "nomos-customers-api-openapi.yml",
+    "nomos-events-api-openapi.yml",
+    "nomos-grid-fee-reductions-api-openapi.yml",
+    "nomos-invoices-api-openapi.yml",
+    "nomos-leads-api-openapi.yml",
+    "nomos-market-partners-api-openapi.yml",
+    "nomos-plans-api-openapi.yml",
+    "nomos-prices-api-openapi.yml",
+    "nomos-smart-meter-orders-api-openapi.yml",
+    "nomos-subscriptions-api-openapi.yml",
+    "nomos-usage-api-openapi.yml"
+  ],
+  "outputs": [
+    "nomos-authentication-api-openapi.yml",
+    "nomos-customers-api-openapi.yml",
+    "nomos-events-api-openapi.yml",
+    "nomos-grid-fee-reductions-api-openapi.yml",
+    "nomos-invoices-api-openapi.yml",
+    "nomos-leads-api-openapi.yml",
+    "nomos-market-partners-api-openapi.yml",
+    "nomos-plans-api-openapi.yml",
+    "nomos-prices-api-openapi.yml",
+    "nomos-smart-meter-orders-api-openapi.yml",
+    "nomos-subscriptions-api-openapi.yml",
+    "nomos-usage-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

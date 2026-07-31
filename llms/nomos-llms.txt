@@ -1,0 +1,91 @@
+# Nomos
+
+## Docs
+
+- [Authorize](https://docs.nomos.energy/api-reference/authentication/authorize.md): Create an authorized session
+- [Create a magic link (customer portal)](https://docs.nomos.energy/api-reference/authentication/create-a-magic-link-customer-portal.md): This endpoint can be used to create a customer portal magic link. The link (returned in the `link` property) allows your customer to directly access the customer portal. This is useful if you want to integrate the customer portal into your own application. Remember that it is your responsibility to…
+- [Create a token](https://docs.nomos.energy/api-reference/authentication/create-a-token.md): Retrieve a token
+- [List customers](https://docs.nomos.energy/api-reference/customers/list-customers.md): Retrieve all customers with cursor pagination
+- [Retrieve a customer](https://docs.nomos.energy/api-reference/customers/retrieve-a-customer.md): Retrieve customer details by their id
+- [Update a customer](https://docs.nomos.energy/api-reference/customers/update-a-customer.md): Update the editable fields of a customer. Only `first_name` and `last_name` may be changed; both are optional so a request may update just one. Returns the updated customer.
+- [Retrieve an event](https://docs.nomos.energy/api-reference/events/retrieve-an-event.md): Retrieve event details by their id
+- [Create a grid fee reduction](https://docs.nomos.energy/api-reference/grid-fee-reductions/create-a-grid-fee-reduction.md): Create a new grid fee reduction for §14a EnWG modules. Not applicable for feed-in subscriptions, which do not pay grid fees.
+- [List grid fee reductions](https://docs.nomos.energy/api-reference/grid-fee-reductions/list-grid-fee-reductions.md): Retrieve all grid fee reductions for the organization. Customer users will only see their own.
+- [Retrieve a grid fee reduction](https://docs.nomos.energy/api-reference/grid-fee-reductions/retrieve-a-grid-fee-reduction.md): Retrieve a grid reduction details by its id
+- [List invoices](https://docs.nomos.energy/api-reference/invoices/list-invoices.md): Invoices summarise the amounts owed/payed for a subscription. Usage invoices (`type: "usage"`) bill the metered electricity consumption of a billing period and include all line items such as energy, grid fees and taxes. Prepayment invoices (`type: "prepayment"`) charge a fixed advance amount and car…
+- [Retrieve an invoice](https://docs.nomos.energy/api-reference/invoices/retrieve-an-invoice.md): Download the PDF of an invoice
+- [Retrieve an invoice PDF](https://docs.nomos.energy/api-reference/invoices/retrieve-an-invoice-pdf.md): Retrieve a PDF file of an invoice from the storage
+- [Create a lead](https://docs.nomos.energy/api-reference/leads/create-a-lead.md): This endpoint can be used to create a secure, pre-filled checkout link. The link (returned in the "link" property) contains all provided customer, address and meter data, allowing the prospect to finalize their signup with only providing the missing payment information, essentially enabling a 2-clic…
+- [List leads](https://docs.nomos.energy/api-reference/leads/list-leads.md): Retrieve all leads with cursor pagination. Leads for feed-in plans are only available from the `2026-05-27.curie` API version onwards.
+- [Retrieve a lead](https://docs.nomos.energy/api-reference/leads/retrieve-a-lead.md): Retrieve lead details by its id
+- [List market partners](https://docs.nomos.energy/api-reference/market-partners/list-market-partners.md): This is a list of all German electricity retailers, which a customer can select as their previous supplier in the checkout process. It can be used to build a dropdown menu in an embedded checkout to select the previous supplier.
+- [List plans](https://docs.nomos.energy/api-reference/plans/list-plans.md): Retrieve all plans with cursor pagination
+- [Retrieve a plan](https://docs.nomos.energy/api-reference/plans/retrieve-a-plan.md): Retrieve a plan details by its id
+- [Retrieve a quote](https://docs.nomos.energy/api-reference/plans/retrieve-a-quote.md): Retrieve a quote details by its id. All prices are inclusive of VAT, with one exception: feed-in payouts to a tax-exempt customer (`is_tax_exempt: true`, e.g. a Kleinunternehmer under § 19 UStG) are quoted without VAT, matching what the customer is later credited. The §14a EnWG module options only a…
+- [Retrieve a price time series](https://docs.nomos.energy/api-reference/prices/retrieve-a-price-time-series.md): Retrieve a price object for a given subscription. For a consumption subscription this is the variable price time series the customer pays and can optimize consumption against; for a feed-in subscription it is the payout the customer is credited per kWh, based on EPEX day-ahead spot prices and withou…
+- [Create a smart meter order](https://docs.nomos.energy/api-reference/smart-meter-orders/create-a-smart-meter-order.md): Create a new meter order for a subscription. The subscription's plan must support a smart-meter product type. Not applicable for feed-in subscriptions, as a smart meter must be present before starting a feed-in subscription.
+- [List smart meter orders](https://docs.nomos.energy/api-reference/smart-meter-orders/list-smart-meter-orders.md): Retrieve all meter orders for the organization
+- [Retrieve a smart meter order](https://docs.nomos.energy/api-reference/smart-meter-orders/retrieve-a-smart-meter-order.md): Retrieve a meter order by its ID
+- [Create a subscription](https://docs.nomos.energy/api-reference/subscriptions/create-a-subscription.md): Create a new subscription. The plan's direction decides which signup rules apply.
+- [List subscriptions](https://docs.nomos.energy/api-reference/subscriptions/list-subscriptions.md): Retrieve all subscriptions
+- [Retrieve a subscription](https://docs.nomos.energy/api-reference/subscriptions/retrieve-a-subscription.md): Retrieve a subscription details by its id
+- [Terminate a subscription](https://docs.nomos.energy/api-reference/subscriptions/terminate-a-subscription.md): Terminate a subscription. Three reasons are supported:
+- [Update a subscription](https://docs.nomos.energy/api-reference/subscriptions/update-a-subscription.md): Update the editable fields of a subscription. Only the allow-listed properties may be changed; any other field is ignored. `billing_address` replaces the subscription's billing address (all of street, house number, zip, city are required); the address row is mutated in place, so a row shared across…
+- [Create a load forecast](https://docs.nomos.energy/api-reference/usage/create-a-load-forecast.md): This endpoint is used to transmit a load forecast for a subscription. Values must be submitted by 9:00 a.m. local time on the previous day to be considered in the day-ahead auction, and at least 15 minutes before delivery to be included in continuous intraday trading. Data points must be strictly co…
+- [Create a meter reading](https://docs.nomos.energy/api-reference/usage/create-a-meter-reading.md): Submit a customer-reported analog meter reading for the active meter of a subscription.
+- [List meter readings](https://docs.nomos.energy/api-reference/usage/list-meter-readings.md): Retrieve all meter readings for the organization with cursor pagination. Customer users will only see their own. Use filter[subscription][eq]=<id> to scope to a single subscription.
+- [Retrieve usage data](https://docs.nomos.energy/api-reference/usage/retrieve-usage-data.md): Retrieve the usage data for a subscription. Usage is the electricity consumed from the grid, or fed into the grid for feed-in subscriptions. Values are positive magnitudes for both directions; the direction comes from the plan. Results depend on the meter type.
+- [Authentication](https://docs.nomos.energy/api-references/authentication.md): Authenticate with the Nomos API using OAuth 2.0.
+- [Changelog](https://docs.nomos.energy/api-references/changelog.md): What changed between Nomos API versions.
+- [Errors](https://docs.nomos.energy/api-references/errors.md): Decode the Nomos error envelope and handle each error code.
+- [Filtering](https://docs.nomos.energy/api-references/filtering.md): Narrow list endpoints with bracket-notation query filters.
+- [API Reference](https://docs.nomos.energy/api-references/introduction.md): Understand general concepts, response codes, and authentication strategies.
+- [Pagination](https://docs.nomos.energy/api-references/pagination.md): Walk list endpoints with cursor-based pagination.
+- [Versioning](https://docs.nomos.energy/api-references/versioning.md): Pin an API version per Auth Client or per request.
+- [AI agents](https://docs.nomos.energy/guides/ai-agents.md): Give a coding or operations agent working knowledge of the Nomos API with an installable skill.
+- [Checkout](https://docs.nomos.energy/guides/checkout.md): Take a customer from quote to active subscription using your own UI, with Nomos handling the contract, supplier switch, and billing in the background.
+- [Customer Portal](https://docs.nomos.energy/guides/customer-portal.md): Surface a customer's contract, invoices, meter readings, and consumption inside your own app, with no Nomos UI involved.
+- [Feed-in](https://docs.nomos.energy/guides/feed-in.md): Sign up customers who feed solar power into the grid, with Nomos handling grid registration, metering, and monthly credits.
+- [Grid Fee Reductions (§14a EnWG)](https://docs.nomos.energy/guides/grid-fee-reductions.md): Quote, order, and track Module 1, 2, and 3 grid fee reductions for customers with controllable consumption devices.
+- [Checkout](https://docs.nomos.energy/guides/hosted-checkout.md): Your brand, your Checkout.
+- [Customer Portal](https://docs.nomos.energy/guides/hosted-customer-portal.md): Designed for self-service.
+- [Leads & Checkout Links](https://docs.nomos.energy/guides/leads.md): Designed for one-tap signup.
+- [Load Shifting and Optimization](https://docs.nomos.energy/guides/load-shifting.md): Pull a customer's 15-minute electricity prices, shift their flexible loads into the cheap intervals, and verify the result against actual consumption.
+- [Portal Single Sign-On](https://docs.nomos.energy/guides/magic-link.md): Designed to skip the second sign-in.
+- [Smart Meter Installation Partnerships](https://docs.nomos.energy/guides/order-smart-meters.md): Order smart meters (iMSys) for your customers on a predictable timeline through Nomos's wMSB partnerships, the precondition for dynamic pricing, §14a savings, and HEMS integrations.
+- [Pricing Breakdown](https://docs.nomos.energy/guides/pricing.md): Render checkout quote breakdowns and customer-portal price displays for a German dynamic tariff, layer by layer.
+- [Third-Party Login](https://docs.nomos.energy/guides/third-party-oauth.md): Designed for customer-consented access.
+- [Nomos Documentation](https://docs.nomos.energy/home.md): Guides, API reference, and webhooks for the Nomos energy platform.
+- [Quickstart](https://docs.nomos.energy/quickstart.md): Pick your integration path and set up API access in under five minutes.
+- [invoice.created](https://docs.nomos.energy/webhooks/events/invoice-created.md): Sent when an invoice transitions to `open`.
+- [invoice.paid](https://docs.nomos.energy/webhooks/events/invoice-paid.md): Sent when an invoice has been paid in full.
+- [invoice.payment_failed](https://docs.nomos.energy/webhooks/events/invoice-payment_failed.md): Sent when a payment attempt for an invoice fails.
+- [invoice.uncollectible](https://docs.nomos.energy/webhooks/events/invoice-uncollectible.md): Sent when an invoice is marked as uncollectible.
+- [invoice.voided](https://docs.nomos.energy/webhooks/events/invoice-voided.md): Sent when an invoice is voided.
+- [meter_order.activated](https://docs.nomos.energy/webhooks/events/meter_order-activated.md): Sent when the smart meter is activated.
+- [meter_order.blocked](https://docs.nomos.energy/webhooks/events/meter_order-blocked.md): Sent when a smart meter order is flagged as blocked.
+- [meter_order.cancelled](https://docs.nomos.energy/webhooks/events/meter_order-cancelled.md): Sent when a smart meter order is cancelled.
+- [meter_order.check_reviewed](https://docs.nomos.energy/webhooks/events/meter_order-check_reviewed.md): Sent when the installation partner has reviewed the order.
+- [meter_order.check_submitted](https://docs.nomos.energy/webhooks/events/meter_order-check_submitted.md): Sent when the customer submits additional details for the installation partner.
+- [meter_order.created](https://docs.nomos.energy/webhooks/events/meter_order-created.md): Sent when a smart meter order is created.
+- [meter_order.installed](https://docs.nomos.energy/webhooks/events/meter_order-installed.md): Sent when the smart meter is installed.
+- [meter_order.placed](https://docs.nomos.energy/webhooks/events/meter_order-placed.md): Sent when the order has been transferred to the installation partner.
+- [meter_order.scheduled](https://docs.nomos.energy/webhooks/events/meter_order-scheduled.md): Sent when an installation appointment is scheduled.
+- [subscription.activated](https://docs.nomos.energy/webhooks/events/subscription-activated.md): Sent when a customer's supply starts.
+- [subscription.confirmed](https://docs.nomos.energy/webhooks/events/subscription-confirmed.md): Sent when a customer's supply start date is confirmed.
+- [subscription.created](https://docs.nomos.energy/webhooks/events/subscription-created.md): Sent when a customer completes signup.
+- [subscription.ended](https://docs.nomos.energy/webhooks/events/subscription-ended.md): Sent when a customer's supply ends.
+- [subscription.terminated](https://docs.nomos.energy/webhooks/events/subscription-terminated.md): Sent when a customer schedules cancellation.
+- [Webhooks](https://docs.nomos.energy/webhooks/introduction.md): Receive real-time updates from the Nomos API as signed HTTPS requests.
+- [How to receive webhooks](https://docs.nomos.energy/webhooks/receiving.md): To receive real-time events in your app via webhooks, follow these steps.
+- [Retries](https://docs.nomos.energy/webhooks/retries.md): Handle webhook failures with exponential backoff.
+- [Verify webhook requests](https://docs.nomos.energy/webhooks/verify-requests.md): Reject forged and replayed webhook deliveries before they reach your handlers.
+
+## OpenAPI Specs
+
+- [openapi.edison](https://docs.nomos.energy/openapi/openapi.edison.json)
+- [openapi.curie](https://docs.nomos.energy/openapi/openapi.curie.json)
+- [openapi.chucky](https://docs.nomos.energy/openapi/openapi.chucky.json)
+- [openapi.batman](https://docs.nomos.energy/openapi/openapi.batman.json)
+- [package](https://docs.nomos.energy/package.json)
+- [openapi](https://docs.nomos.energy/api-reference/openapi.yaml)

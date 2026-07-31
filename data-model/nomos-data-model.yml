@@ -1,0 +1,92 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/nomos-openapi-original.json
+docs: https://docs.nomos.energy/api-references/introduction
+note: >-
+  Entity graph derived from OpenAPI resources/tags plus documented id-prefixes
+  and the checkout/billing domain relationships in the guides.
+id_prefixes:
+  customer: cus_
+  subscription: sub_
+  plan: plan_
+  lead: lead_
+  invoice: inv_
+  market_partner: mp_
+  event: evt_
+entities:
+- name: plan
+  prefix: plan_
+  description: A tariff configured on your organization (consumption or feed_in); quotable per zip/usage.
+- name: lead
+  prefix: lead_
+  description: A pre-filled checkout link created for a prospect to finish signup.
+- name: customer
+  prefix: cus_
+  description: The end customer (person/company) supplied with electricity.
+- name: subscription
+  prefix: sub_
+  description: A customer's active supply contract against a plan.
+- name: invoice
+  prefix: inv_
+  description: Monthly billing document for a subscription (usage|prepayment|void).
+- name: meter_reading
+  description: A customer- or operator-reported reading for a subscription's active meter.
+- name: meter_order
+  description: A smart meter (iMSys) installation order for a subscription.
+- name: grid_fee_reduction
+  description: A §14a EnWG grid fee reduction (module 1/2/3) on a subscription.
+- name: usage
+  description: Electricity drawn from / fed into the grid for a subscription.
+- name: price
+  description: Per-subscription price time series (EPEX day-ahead spot based).
+- name: market_partner
+  prefix: mp_
+  description: A German electricity retailer selectable as previous supplier in checkout.
+- name: event
+  prefix: evt_
+  description: A stored webhook event referencing a resource by id in its context.
+relationships:
+- from: subscription
+  to: customer
+  type: belongs_to
+  via: customer
+- from: subscription
+  to: plan
+  type: belongs_to
+  via: plan
+- from: subscription
+  to: invoice
+  type: has_many
+  via: subscription
+- from: subscription
+  to: meter_reading
+  type: has_many
+  via: subscription
+- from: subscription
+  to: meter_order
+  type: has_many
+  via: subscription
+- from: subscription
+  to: grid_fee_reduction
+  type: has_many
+  via: subscription
+- from: subscription
+  to: usage
+  type: has_one
+  via: subscription
+- from: subscription
+  to: price
+  type: has_one
+  via: subscription
+- from: lead
+  to: plan
+  type: belongs_to
+  via: plan
+- from: quote
+  to: plan
+  type: belongs_to
+  via: plan
+- from: event
+  to: subscription
+  type: references
+  via: context

@@ -1,0 +1,40 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.nomos.energy/api-references/changelog
+scheme: date-codename
+current: 2026-05-27.curie
+entries:
+- version: 2026-05-27.curie
+  status: latest-stable
+  breaking: true
+  highlights:
+  - Feed-in support (plans/subscriptions carry type consumption|feed_in).
+  - Restructured key resources to top-level endpoints (/invoices, /meter-readings, /market-partners) replacing nested routes.
+  - First PATCH endpoints (PATCH /subscriptions/{id}, PATCH /customers/{id}).
+  - POST /subscriptions/{id}/terminate with discriminated reason (ORDINARY|MOVE_OUT|WITHDRAWAL).
+  - Webhook events for invoices and smart meter orders.
+  - Structured validation errors (errors[] array, one entry per invalid field).
+  - Invoice prepayment/void support; meter-order lifecycle timestamps.
+  breaking_changes:
+  - '/subscriptions/{id}/invoices -> /invoices'
+  - '/subscriptions/{id}/meter_readings -> /meter-readings'
+  - '/suppliers, /suppliers/search -> /market-partners'
+  - '/subscriptions/{id}/consumption -> /subscriptions/{id}/usage'
+- version: 2026-01-29.edison
+  status: previous
+  breaking: false
+  highlights:
+  - Grid fee reductions for §14a EnWG modules (GET/POST /grid-fee-reductions).
+  - Smart meter orders (GET/POST /meter-orders).
+  - Filtering on all list endpoints.
+- version: 2025-12-16.batman
+  status: previous
+  breaking: true
+  highlights:
+  - Cursor pagination on all list endpoints.
+  - API versioning via X-API-Version.
+- version: 2025-12-01.chucky
+  status: initial-stable
+  breaking: false
+  highlights:
+  - Initial public version of the Nomos API.

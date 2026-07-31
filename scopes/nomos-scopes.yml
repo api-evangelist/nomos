@@ -1,0 +1,35 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/nomos-openapi-original.json
+docs: https://docs.nomos.energy/api-references/authentication#scopes
+note: >-
+  The OpenAPI declares http Bearer (JWT) + Basic security schemes, but the
+  bearer token is minted through an OAuth 2.0 flow (RFC 6749). Scopes are
+  documented on the authentication page, not in the spec's securitySchemes,
+  so this artifact is searched from the docs.
+schemes:
+- name: OAuth2
+  type: oauth2
+  authorization_endpoint: https://api.nomos.energy/oauth/authorize
+  token_endpoint: https://api.nomos.energy/oauth/token
+  metadata: https://api.nomos.energy/.well-known/oauth-authorization-server
+  grant_types:
+  - client_credentials      # server-to-server against your own org data (most integrations)
+  - authorization_code      # acting on behalf of an end customer (PKCE, S256/plain)
+  - refresh_token
+  token_endpoint_auth: client_secret_basic
+  token_ttl_seconds: 3600
+scopes:
+- scope: 'read:*'
+  description: All GET requests across the API (the entire read surface).
+  applies_to: [GET]
+- scope: 'write:*'
+  description: >-
+    All non-GET requests (POST, PATCH, PUT, DELETE). A key without write:* is
+    rejected with 403 FORBIDDEN on any mutating request.
+  applies_to: [POST, PATCH, PUT, DELETE]
+notes: >-
+  Scopes are fixed when a key is created and cannot be narrowed per request;
+  rotate to a new key to change scope. The wildcard scopes are supersets:
+  resource-named scopes (read:invoice, write:subscription) may be introduced
+  later. Default full-access key carries "read:* write:*".

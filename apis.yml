@@ -1,22 +1,309 @@
 aid: nomos
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nomos.png
 name: Nomos
-description: Nomos is a company surfaced as a portfolio company of speedinvest and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Nomos runs a whitelabel (embedded) energy platform for the German market:
+  partners sell dynamic, EPEX-spot electricity plans under their own brand while
+  Nomos, a licensed and regulated electricity retailer, handles customer
+  onboarding, supplier switching, smart-meter (iMSys) orders, §14a EnWG
+  grid-fee reductions, dynamic pricing, metering, billing and solar feed-in
+  compensation behind a single REST API. The API (api.nomos.energy) uses OAuth
+  2.0 with read:*/write:* scopes, dated X-API-Version releases, cursor
+  pagination, bracket-notation filtering, a structured error envelope and signed
+  webhooks, plus hosted checkout and customer-portal surfaces.
 url: https://raw.githubusercontent.com/api-evangelist/nomos/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - speedinvest
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: active
+x-tier-reason: has-public-api
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
 tags:
 - Company
-apis: []
+- Energy
+- Electricity
+- Utilities
+- Embedded Finance
+- Dynamic Pricing
+- Billing
+- Metering
+- Smart Meter
+- Germany
+- OAuth
+- Webhooks
+apis:
+- aid: nomos:nomos-authentication-api
+  name: Nomos Authentication API
+  description: The Authentication API from Nomos — 3 operation(s) for authentication.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-authentication-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
+- aid: nomos:nomos-customers-api
+  name: Nomos Customers API
+  description: The Customers API from Nomos — 2 operation(s) for customers.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-customers-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
+- aid: nomos:nomos-events-api
+  name: Nomos Events API
+  description: The Events API from Nomos — 1 operation(s) for events.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-events-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
+- aid: nomos:nomos-grid-fee-reductions-api
+  name: Nomos Grid Fee Reductions API
+  description: The Grid Fee Reductions API from Nomos — 2 operation(s) for grid fee reductions.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Grid Fee Reductions
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-grid-fee-reductions-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
+- aid: nomos:nomos-invoices-api
+  name: Nomos Invoices API
+  description: The Invoices API from Nomos — 3 operation(s) for invoices.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-invoices-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
+- aid: nomos:nomos-leads-api
+  name: Nomos Leads API
+  description: The Leads API from Nomos — 2 operation(s) for leads.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Leads
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-leads-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
+- aid: nomos:nomos-market-partners-api
+  name: Nomos Market Partners API
+  description: The Market Partners API from Nomos — 1 operation(s) for market partners.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Market Partners
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-market-partners-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
+- aid: nomos:nomos-plans-api
+  name: Nomos Plans API
+  description: The Plans API from Nomos — 3 operation(s) for plans.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Plans
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-plans-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
+- aid: nomos:nomos-prices-api
+  name: Nomos Prices API
+  description: The Prices API from Nomos — 1 operation(s) for prices.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Prices
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-prices-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
+- aid: nomos:nomos-smart-meter-orders-api
+  name: Nomos Smart Meter Orders API
+  description: The Smart Meter Orders API from Nomos — 2 operation(s) for smart meter orders.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Smart Meter Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-smart-meter-orders-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
+- aid: nomos:nomos-subscriptions-api
+  name: Nomos Subscriptions API
+  description: The Subscriptions API from Nomos — 3 operation(s) for subscriptions.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-subscriptions-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
+- aid: nomos:nomos-usage-api
+  name: Nomos Usage API
+  description: The Usage API from Nomos — 3 operation(s) for usage.
+  humanURL: https://docs.nomos.energy
+  baseURL: https://api.nomos.energy
+  tags:
+  - Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/nomos-usage-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/nomos-webhooks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.nomos.energy
+  - type: APIReference
+    url: https://docs.nomos.energy/api-references/introduction
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+# --- identity / link properties ---
+- type: Website
+  url: https://www.nomos.energy/en/
+- type: DeveloperPortal
+  url: https://docs.nomos.energy
+- type: Documentation
+  url: https://docs.nomos.energy
+- type: APIReference
+  url: https://docs.nomos.energy/api-references/introduction
+- type: GettingStarted
+  url: https://docs.nomos.energy/quickstart
+- type: SignUp
+  url: https://dashboard.nomos.energy/login
+- type: PrivacyPolicy
+  url: https://www.nomos.energy/en/privacy
+# --- authentication / authorization ---
+- type: Authentication
+  url: authentication/nomos-authentication.yml
+- type: OAuthScopes
+  url: scopes/nomos-scopes.yml
+# --- runtime semantics ---
+- type: Conventions
+  url: conventions/nomos-conventions.yml
+- type: ErrorCatalog
+  url: errors/nomos-problem-types.yml
+- type: DataModel
+  url: data-model/nomos-data-model.yml
+- type: Components
+  url: components/nomos-components.yml
+# --- lifecycle / change ---
+- type: Lifecycle
+  url: lifecycle/nomos-lifecycle.yml
+- type: Deprecation
+  url: https://docs.nomos.energy/api-references/versioning
+- type: ChangeLog
+  url: changelog/nomos-changelog.yml
+# --- events / webhooks ---
+- type: AsyncAPI
+  url: asyncapi/nomos-webhooks-asyncapi.yml
+- type: Webhooks
+  url: https://docs.nomos.energy/webhooks/introduction
+# --- agent surfaces ---
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/nomos-mcp.yml
+- type: AgenticAccess
+  url: agentic-access/nomos-agentic-access.yml
+- type: LLMsTxt
+  url: llms/nomos-llms.txt
+# --- discovery / conformance / security ---
+- type: WellKnown
+  url: well-known/nomos-well-known.yml
+- type: Conformance
+  url: conformance/nomos-conformance.yml
+- type: DomainSecurity
+  url: security/nomos-domain-security.yml
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1

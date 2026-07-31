@@ -1,0 +1,27 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.nomos.energy/guides/ai-agents
+note: >-
+  Nomos publishes a first-party Agent Skill (Anthropic Agent Skills SKILL.md
+  format) that teaches an agent the base URL, OAuth, versioning, pagination,
+  filtering, error handling and the full scope-aware endpoint catalog. Saved
+  verbatim.
+skills:
+- file: nomos-api.md
+  name: nomos-api
+  official: true
+  api: openapi/nomos-openapi-original.json
+  description: >-
+    Scope-aware working knowledge of the Nomos energy REST API: OAuth (client
+    credentials + authorization code/PKCE), read:*/write:* scope enforcement,
+    X-API-Version pinning, cursor pagination, bracket filtering, the error
+    envelope, and every endpoint grouped by read vs write surface.
+  operations:
+  - GET /plans
+  - GET /subscriptions
+  - POST /subscriptions
+  - POST /leads
+  - POST /meter-readings
+  - POST /load-forecasts
+  - POST /meter-orders
+  - POST /grid-fee-reductions

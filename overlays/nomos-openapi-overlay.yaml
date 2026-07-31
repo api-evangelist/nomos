@@ -1,0 +1,32 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Nomos API
+  version: 1.0.0
+extends: openapi/nomos-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-20'
+    x-apievangelist-provider: nomos
+    x-apievangelist-artifacts:
+    - authentication
+    - scopes
+    - conventions
+    - errors
+    - lifecycle
+    - changelog
+    - conformance
+    - data-model
+    - components
+    - skills
+    - asyncapi/webhooks
+    - agentic-access
+    - well-known
+    - mcp
+    x-api-scopes:
+    - read:*
+    - write:*
+    x-webhook-events-documented: 19
+- target: $.components.securitySchemes
+  update:
+    x-oauth2-authorization-server: https://api.nomos.energy/.well-known/oauth-authorization-server

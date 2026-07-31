@@ -1,0 +1,31 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.nomos.energy/guides/hosted-checkout
+note: >-
+  Nomos ships hosted, brand-themed, prebuilt UI surfaces (not JS component
+  libraries): a hosted checkout and a hosted customer portal, each served on a
+  per-plan subdomain and themed to the partner's organization.
+families:
+- name: Hosted Checkout
+  kind: hosted-prebuilt-surface
+  url_template: 'https://{plan.slug}.checkout.energy/'
+  docs: https://docs.nomos.energy/guides/hosted-checkout
+  description: >-
+    Branded, conversion-optimized German-energy signup handling address
+    validation, supplier search, IBAN, plausibility checks, and accessibility.
+    Redirects back once the subscription is created.
+  prefill_params:
+  - zip
+  - usage
+  - id
+  - metadata.<key>
+  - metadata.email
+- name: Hosted Customer Portal
+  kind: hosted-prebuilt-surface
+  url_template: 'https://{plan.slug}.customerportal.energy/'
+  docs: https://docs.nomos.energy/guides/hosted-customer-portal
+  description: >-
+    Self-service portal for invoices, dynamic prices, consumption, tariff
+    overview, account and product orders. Themed to the partner brand; signs in
+    with a one-time email code (magic link).
+  sso: 'POST /admin/magic_link (portal magic link)'

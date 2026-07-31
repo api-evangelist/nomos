@@ -1,0 +1,19 @@
+generated: '2026-07-20'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: api.nomos.energy
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  5 23:25:28 2026 GMT
+  hsts: false
+domains:
+- domain: nomos.energy
+  dnssec: false
+  caa:
+  - 0 issue "pki.goog"
+  - 0 issue "sectigo.com"
+  - 0 issue "letsencrypt.org"
+  spf: true
+  dmarc: true
+  dmarc_policy: none

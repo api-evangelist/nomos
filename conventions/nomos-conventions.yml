@@ -1,0 +1,95 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.nomos.energy/api-references/introduction
+docs:
+  authentication: https://docs.nomos.energy/api-references/authentication
+  pagination: https://docs.nomos.energy/api-references/pagination
+  filtering: https://docs.nomos.energy/api-references/filtering
+  versioning: https://docs.nomos.energy/api-references/versioning
+  errors: https://docs.nomos.energy/api-references/errors
+authentication:
+  style: oauth2-bearer
+  detail: >-
+    OAuth 2.0. Exchange client_id/client_secret for a short-lived JWT bearer
+    token (client credentials for server-to-server, or authorization code +
+    PKCE on behalf of a customer). Send Authorization: Bearer <token>. Tokens
+    last 60 minutes; refresh with grant_type=refresh_token. HTTPS only.
+  scopes: [read:*, write:*]
+  see: authentication/nomos-authentication.yml
+idempotency:
+  request_idempotency: false
+  detail: >-
+    Nomos does not document a request-level idempotency key for write
+    operations. Idempotency guidance is on the consumer side: webhook delivery
+    is at-least-once, so handlers must dedupe on the event id. Do not assume a
+    retried POST is de-duplicated server-side.
+  webhook_delivery: at-least-once
+  webhook_dedupe_field: id
+pagination:
+  style: cursor
+  params:
+    limit: 'Page size, 1-100, default 10'
+    cursor: "The previous response's next_page value; omit on first request"
+  response_fields:
+    object: 'list'
+    items: 'the page of results'
+    has_more: 'true when more pages exist'
+    next_page: 'opaque cursor for the next request, or null on the last page'
+  order: newest-first by created_at
+  note: >-
+    Keep all other query params (filters, limit) identical across the walk or
+    the cursor is invalidated (400 BAD_REQUEST on a tampered cursor).
+filtering:
+  style: bracket-notation
+  syntax: 'filter[<field>][<operator>]=<value>'
+  combine: AND
+  operators:
+    string: [eq, ne, in, is_null, contains, starts_with, ends_with]
+    number: [eq, ne, gt, gte, lt, lte, in, is_null]
+    date: [gte, lte, is_null]
+    boolean: [eq, is_null]
+    enum: [eq, ne, in, is_null]
+  note: >-
+    Unknown field or disallowed operator is silently ignored (returns the
+    unfiltered list); malformed syntax/value returns 400 BAD_REQUEST naming the
+    parameter. `in` takes a comma-separated list.
+versioning:
+  style: header-calver-codename
+  header: X-API-Version
+  current: 2026-05-27.curie
+  default: "per Auth Client; new clients default to latest stable"
+  echoed: 'Every response echoes X-API-Version'
+  policy: >-
+    Breaking changes ship only in a new dated version; additive changes (new
+    fields/endpoints) land in existing versions, so clients must ignore
+    unrecognized fields.
+  see: lifecycle/nomos-lifecycle.yml
+error_envelope:
+  fields: [code, message, requestId, docs]
+  structured_validation: >-
+    From 2026-05-27.curie, 4xx validation failures add an errors[] array with
+    one entry per invalid field.
+  guidance: 'Switch on code, not on message. Log requestId for support.'
+  see: errors/nomos-problem-types.yml
+rate_limiting:
+  signal: '429 TOO_MANY_REQUESTS with a human message (e.g. "Wait 30 seconds before retrying.")'
+  guidance: 'Back off with exponential delay and jitter; retry only 429 and 5xx.'
+request_tracing:
+  field: requestId
+  location: error-envelope
+  note: 'UUID returned on every error; surface it to support when reporting failures.'
+identifiers:
+  style: type-prefixed
+  prefixes:
+    customer: cus_
+    subscription: sub_
+    plan: plan_
+    lead: lead_
+    invoice: inv_
+    market_partner: mp_
+    event: evt_
+metadata:
+  supported: true
+  detail: >-
+    Subscriptions carry a mutable metadata map (merge on PATCH; set a key to
+    null to remove, or metadata:null to clear all).
