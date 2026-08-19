@@ -1,0 +1,656 @@
+{
+  "item": [
+    {
+      "id": "7ce725de-885a-4fd1-aed2-5ceabbabce8d",
+      "name": "Events",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7e7c8235-958f-41d3-9e58-a4f7775f4a26",
+          "name": "Retrieve an event",
+          "request": {
+            "name": "Retrieve an event",
+            "description": {
+              "content": "Retrieve event details by their id",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "831d930d-e67c-49f2-9217-72f271ab90d0",
+              "name": "Retrieve the event details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"evt_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"topic\": \"subscription.created\",\n  \"timestamp\": \"1951-12-13T23:04:02.028Z\",\n  \"context\": {\n    \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n    \"lead\": \"lead_mi4f0oda6x9m7gcsvjk0ole1\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e547ac1f-cdaf-4b2d-9c5c-f721869bd5ad",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"BAD_REQUEST\",\n  \"message\": \"invalid_type in 'end': Required\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/BAD_REQUEST\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bfdade2-8b63-4247-8aae-e44ddc0abd2c",
+              "name": "The client must authenticate itself to get the requested response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"UNAUTHORIZED\",\n  \"message\": \"Invalid or malformed token\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/UNAUTHORIZED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b9f6e45-9485-4901-8ece-d915e367a119",
+              "name": "A higher pricing plan is required to access the resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"PAYMENT_REQUIRED\",\n  \"message\": \"Payment required\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/PAYMENT_REQUIRED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "807360a0-0e21-4e41-bd61-77995639b054",
+              "name": "The client does not have the necessary permissions to access the resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"FORBIDDEN\",\n  \"message\": \"You are not allowed to access this resource\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/FORBIDDEN\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91c2ac29-2934-4bb9-8e6f-2a7853209cb5",
+              "name": "The server can't find the requested resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/NOT_FOUND\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b5be378-b393-407f-a517-c086f1847a19",
+              "name": "The request method is not allowed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"METHOD_NOT_ALLOWED\",\n  \"message\": \"Method not allowed\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/METHOD_NOT_ALLOWED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17f986e3-998e-4cac-861b-ef66b080a26b",
+              "name": "The request could not be completed due to a conflict mainly due to unique constraints.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"CONFLICT\",\n  \"message\": \"Resource already exists\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/CONFLICT\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8a8a191-6a8f-4927-8574-ec250f1e3548",
+              "name": "The request was well-formed but was unable to be followed due to semantic errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"UNPROCESSABLE_ENTITY\",\n  \"message\": \"invalid_enum_value in 'status': Invalid enum value. Expected 'pending' | 'active' | 'ended'\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/UNPROCESSABLE_ENTITY\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "935e079b-7e54-49ab-a133-231437918d57",
+              "name": "The client has sent too many requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"TOO_MANY_REQUESTS\",\n  \"message\": \"Wait 30 seconds before retrying.\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/TOO_MANY_REQUESTS\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2f29113-6b33-4b33-878a-1073a3172f81",
+              "name": "The server has encountered a situation it doesn't know how to handle.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"Internal Server Error\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/INTERNAL_SERVER_ERROR\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.nomos.energy",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8fe075b6-c34c-40ec-8f04-9b599b95b860",
+    "name": "Nomos Authentication Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

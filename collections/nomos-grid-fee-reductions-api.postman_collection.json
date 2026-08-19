@@ -1,0 +1,1899 @@
+{
+  "item": [
+    {
+      "id": "659d7229-4588-4b82-b21b-0f6697913385",
+      "name": "Grid Fee Reductions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b404eea8-2558-420e-a542-4664eeef60b7",
+          "name": "List grid fee reductions",
+          "request": {
+            "name": "List grid fee reductions",
+            "description": {
+              "content": "Retrieve all grid fee reductions for the organization. Customer users will only see their own.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "grid-fee-reductions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a922531c-3168-4e0b-a886-2330bedfca2c",
+              "name": "Retrieve all grid fee reductions for the organization. Customer users will only see their own.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"items\": [\n    {\n      \"object\": \"grid_fee_reduction\",\n      \"id\": \"gfr_mi4f0oda6x9m7gcsvjk0ole1\",\n      \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n      \"type\": \"enwg-14a-module-1\",\n      \"status\": \"intended\",\n      \"valid_from\": \"2024-03-14T12:00:00Z\",\n      \"valid_until\": \"2024-03-14T12:00:00Z\",\n      \"created_at\": \"2024-03-14T12:00:00Z\",\n      \"updated_at\": \"2024-03-14T12:00:00Z\",\n      \"customer\": \"cus_mi4f0oda6x9m7gcsvjk0ole1\"\n    },\n    {\n      \"object\": \"grid_fee_reduction\",\n      \"id\": \"gfr_mi4f0oda6x9m7gcsvjk0ole1\",\n      \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n      \"type\": \"enwg-14a-module-1\",\n      \"status\": \"intended\",\n      \"valid_from\": \"2024-03-14T12:00:00Z\",\n      \"valid_until\": \"2024-03-14T12:00:00Z\",\n      \"created_at\": \"2024-03-14T12:00:00Z\",\n      \"updated_at\": \"2024-03-14T12:00:00Z\",\n      \"customer\": \"cus_mi4f0oda6x9m7gcsvjk0ole1\"\n    }\n  ],\n  \"next_page\": \"eyJsYXN0X2NyZWF0ZWRfYXQiOiIyMDI1LTAxLTE1VDEwOjMwOjAwLjAwMFoiLCJsYXN0X2lkIjoic3ViX21pNGYwb2RhNng5bTdnY3N2amswb2xlMSIsImxpbWl0IjoyMH0=\",\n  \"has_more\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5d6f51e-d2dc-453e-9f42-364b2ccbfb96",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"BAD_REQUEST\",\n  \"message\": \"invalid_type in 'end': Required\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/BAD_REQUEST\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a15b9f7-dc2d-4f57-81e4-6dd5850e74be",
+              "name": "The client must authenticate itself to get the requested response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"UNAUTHORIZED\",\n  \"message\": \"Invalid or malformed token\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/UNAUTHORIZED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea8242ba-9858-4fa3-83e2-6c75c90b6925",
+              "name": "A higher pricing plan is required to access the resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"PAYMENT_REQUIRED\",\n  \"message\": \"Payment required\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/PAYMENT_REQUIRED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60897999-6903-4b36-bb1a-6277163afee6",
+              "name": "The client does not have the necessary permissions to access the resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"FORBIDDEN\",\n  \"message\": \"You are not allowed to access this resource\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/FORBIDDEN\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c4402b8-3ded-4401-b826-14a2508a1561",
+              "name": "The server can't find the requested resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/NOT_FOUND\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "125dbdcc-53b0-4363-b99b-fa61666e244f",
+              "name": "The request method is not allowed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"METHOD_NOT_ALLOWED\",\n  \"message\": \"Method not allowed\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/METHOD_NOT_ALLOWED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5354fd1d-a710-4018-ab7e-8e63fe5905cf",
+              "name": "The request could not be completed due to a conflict mainly due to unique constraints.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"CONFLICT\",\n  \"message\": \"Resource already exists\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/CONFLICT\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01a68781-5782-4215-ab5d-890583156d2f",
+              "name": "The request was well-formed but was unable to be followed due to semantic errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"UNPROCESSABLE_ENTITY\",\n  \"message\": \"invalid_enum_value in 'status': Invalid enum value. Expected 'pending' | 'active' | 'ended'\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/UNPROCESSABLE_ENTITY\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02490f7f-ed01-4d7f-81ec-15c1f53a1e93",
+              "name": "The client has sent too many requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"TOO_MANY_REQUESTS\",\n  \"message\": \"Wait 30 seconds before retrying.\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/TOO_MANY_REQUESTS\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "605ea1dd-2dec-4963-ac5e-477c1cbf8f32",
+              "name": "The server has encountered a situation it doesn't know how to handle.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"Internal Server Error\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/INTERNAL_SERVER_ERROR\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4325ac17-a7eb-4a2b-ae21-2e1aa1ef22ab",
+          "name": "Create a grid fee reduction",
+          "request": {
+            "name": "Create a grid fee reduction",
+            "description": {
+              "content": "Create a new grid fee reduction for §14a EnWG modules. Not applicable for feed-in subscriptions, which do not pay grid fees.\n\n**Grid fee reduction status:**\n- If the subscription is active: grid fee reduction is created with `ordered` status. Order is submitted immediately\n- If the subscription is pending: grid fee reduction is created with `intended` status. Order will be submitted once the subscription is confirmed\n\n**Re-ordering after rejection:**\nRe-ordering is allowed if the previous grid fee reduction was rejected or ended.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "grid-fee-reductions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription\": \"<string>\",\n  \"type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e9ae62df-fbfa-4428-87b7-38087a017f33",
+              "name": "The newly created grid fee reduction.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"grid_fee_reduction\",\n  \"id\": \"gfr_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\",\n  \"status\": \"intended\",\n  \"valid_from\": \"2024-03-14T12:00:00Z\",\n  \"valid_until\": \"2024-03-14T12:00:00Z\",\n  \"created_at\": \"2024-03-14T12:00:00Z\",\n  \"updated_at\": \"2024-03-14T12:00:00Z\",\n  \"customer\": \"cus_mi4f0oda6x9m7gcsvjk0ole1\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e198175d-7c3c-4797-8afc-8f77eb09b744",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"BAD_REQUEST\",\n  \"message\": \"invalid_type in 'end': Required\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/BAD_REQUEST\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08001bd1-a0be-4d66-9745-fa17b5df0c86",
+              "name": "The client must authenticate itself to get the requested response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"UNAUTHORIZED\",\n  \"message\": \"Invalid or malformed token\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/UNAUTHORIZED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee8e0e5d-bbed-41d6-b82c-2b2bdb786b06",
+              "name": "A higher pricing plan is required to access the resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"PAYMENT_REQUIRED\",\n  \"message\": \"Payment required\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/PAYMENT_REQUIRED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60329204-bed4-47b7-88ac-3b81ae5bfb55",
+              "name": "The client does not have the necessary permissions to access the resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"FORBIDDEN\",\n  \"message\": \"You are not allowed to access this resource\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/FORBIDDEN\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8416032c-a576-4cd9-9aed-d940b6e9db21",
+              "name": "The server can't find the requested resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/NOT_FOUND\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1932e327-36ed-4027-9c2f-0b3dfe0d54de",
+              "name": "The request method is not allowed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"METHOD_NOT_ALLOWED\",\n  \"message\": \"Method not allowed\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/METHOD_NOT_ALLOWED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0be97a2e-e441-4a4f-aab3-55544b10bd00",
+              "name": "The request could not be completed due to a conflict mainly due to unique constraints.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"CONFLICT\",\n  \"message\": \"Resource already exists\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/CONFLICT\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46f99bad-427b-4efa-b29f-97c9ca4a8edd",
+              "name": "The request was well-formed but was unable to be followed due to semantic errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"UNPROCESSABLE_ENTITY\",\n  \"message\": \"invalid_enum_value in 'status': Invalid enum value. Expected 'pending' | 'active' | 'ended'\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/UNPROCESSABLE_ENTITY\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45788476-5a03-45a3-af54-9975dbe8c1c1",
+              "name": "The client has sent too many requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"TOO_MANY_REQUESTS\",\n  \"message\": \"Wait 30 seconds before retrying.\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/TOO_MANY_REQUESTS\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "328a3203-6bf3-4abe-8919-45348c324b02",
+              "name": "The server has encountered a situation it doesn't know how to handle.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"Internal Server Error\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/INTERNAL_SERVER_ERROR\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d397a91-cebd-495e-846d-24dc98005c10",
+          "name": "Retrieve a grid fee reduction",
+          "request": {
+            "name": "Retrieve a grid fee reduction",
+            "description": {
+              "content": "Retrieve a grid reduction details by its id",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "grid-fee-reductions",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3c32e9a5-f1bd-4b99-9fcd-6ca66fe0972a",
+              "name": "Retrieve the grid fee reduction details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"grid_fee_reduction\",\n  \"id\": \"gfr_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"subscription\": \"sub_mi4f0oda6x9m7gcsvjk0ole1\",\n  \"type\": \"enwg-14a-module-1\",\n  \"status\": \"intended\",\n  \"valid_from\": \"2024-03-14T12:00:00Z\",\n  \"valid_until\": \"2024-03-14T12:00:00Z\",\n  \"created_at\": \"2024-03-14T12:00:00Z\",\n  \"updated_at\": \"2024-03-14T12:00:00Z\",\n  \"customer\": \"cus_mi4f0oda6x9m7gcsvjk0ole1\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8c29e0b-f64d-4c94-8a6c-3688bab71679",
+              "name": "The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"BAD_REQUEST\",\n  \"message\": \"invalid_type in 'end': Required\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/BAD_REQUEST\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d240dda2-eb8e-4762-be2e-2f8a0dccdca7",
+              "name": "The client must authenticate itself to get the requested response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"UNAUTHORIZED\",\n  \"message\": \"Invalid or malformed token\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/UNAUTHORIZED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f37b9d1e-2966-4b80-916c-6b2451352787",
+              "name": "A higher pricing plan is required to access the resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"PAYMENT_REQUIRED\",\n  \"message\": \"Payment required\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/PAYMENT_REQUIRED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04271df0-5140-4a00-801f-37895e070f5c",
+              "name": "The client does not have the necessary permissions to access the resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"FORBIDDEN\",\n  \"message\": \"You are not allowed to access this resource\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/FORBIDDEN\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "240343e4-711a-43c6-815a-d77a1875ccb9",
+              "name": "The server can't find the requested resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"NOT_FOUND\",\n  \"message\": \"Resource not found\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/NOT_FOUND\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "055c9ec1-3405-4f14-96f2-50867173fadc",
+              "name": "The request method is not allowed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"METHOD_NOT_ALLOWED\",\n  \"message\": \"Method not allowed\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/METHOD_NOT_ALLOWED\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71577230-b184-44da-b054-15071d33a940",
+              "name": "The request could not be completed due to a conflict mainly due to unique constraints.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"CONFLICT\",\n  \"message\": \"Resource already exists\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/CONFLICT\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "860e2661-b544-49b9-a879-cf2b27cd9e5b",
+              "name": "The request was well-formed but was unable to be followed due to semantic errors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"UNPROCESSABLE_ENTITY\",\n  \"message\": \"invalid_enum_value in 'status': Invalid enum value. Expected 'pending' | 'active' | 'ended'\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/UNPROCESSABLE_ENTITY\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "938e49fe-7f77-4cd0-a501-1576a0bdeb52",
+              "name": "The client has sent too many requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"TOO_MANY_REQUESTS\",\n  \"message\": \"Wait 30 seconds before retrying.\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/TOO_MANY_REQUESTS\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3681ab09-e4f0-4a89-89f3-4deea954b640",
+              "name": "The server has encountered a situation it doesn't know how to handle.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "grid-fee-reductions",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"INTERNAL_SERVER_ERROR\",\n  \"message\": \"Internal Server Error\",\n  \"requestId\": \"37a04f8f-e791-491c-81e1-86cd304649bb\",\n  \"docs\": \"https://docs.nomos.energy/api-references/errors/INTERNAL_SERVER_ERROR\",\n  \"errors\": [\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    },\n    {\n      \"code\": \"invalid_type\",\n      \"field\": \"favoriteNumbers.1\",\n      \"message\": \"Invalid input: expected string, received number\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.nomos.energy",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b6514a33-7686-4ae4-bb73-c85898a46f00",
+    "name": "Nomos Authentication Grid Fee Reductions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

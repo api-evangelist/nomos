@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nomos Authentication Grid Fee Reductions API",
+    "version": "2026-05-27.curie"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Grid Fee Reductions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List grid fee reductions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/grid-fee-reductions",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[field][operator]",
+                "value": "",
+                "type": "query",
+                "description": "**Filterable fields:**\n- `status` (enum): intended, ordered, rejected, activated, ended\n- `customer` (string)\n- `subscription` (string)\n- `created_at` (date)\n- `updated_at` (date)\n\nSee [Filtering Documentation](https://docs.nomos.energy/guides/filtering) for supported operators and syntax."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all grid fee reductions for the organization. Customer users will only see their own."
+        },
+        {
+          "info": {
+            "name": "Create a grid fee reduction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.nomos.energy/grid-fee-reductions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new grid fee reduction for §14a EnWG modules. Not applicable for feed-in subscriptions, which do not pay grid fees.\n\n**Grid fee reduction status:**\n- If the subscription is active: grid fee reduction is created with `ordered` status. Order is submitted immediately\n- If the subscription is pending: grid fee reduction is created with `intended` status. Order will be submitted once the subscription is confirmed\n\n**Re-ordering after rejection:**\nRe-ordering is allowed if the previous grid f"
+        },
+        {
+          "info": {
+            "name": "Retrieve a grid fee reduction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/grid-fee-reductions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a grid reduction details by its id"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nomos Authentication API",
+    "version": "2026-05-27.curie"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.nomos.energy/oauth/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Retrieve a token"
+        },
+        {
+          "info": {
+            "name": "Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/oauth/authorize",
+            "params": [
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query",
+                "description": "The response type, must be 'code' for authorization code flow"
+              },
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "The client identifier issued to the client during registration"
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query",
+                "description": "The URI to redirect to after authorization is complete"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Optional value used by the client to maintain state between request and callback"
+              },
+              {
+                "name": "code_challenge",
+                "value": "",
+                "type": "query",
+                "description": "PKCE code challenge derived from the code verifier"
+              },
+              {
+                "name": "code_challenge_method",
+                "value": "",
+                "type": "query",
+                "description": "Method used to derive the code challenge, either 'S256' or 'plain'"
+              },
+              {
+                "name": "flow_type",
+                "value": "",
+                "type": "query",
+                "description": "If you want to use Nomos as identity provider, you can support a login or signup flow via explicitly setting this parameter. In contrast to the default, the login options skips the consent screen. The signup options allows your users to create a new customer without a subscription attached to it, and therefore register an account."
+              }
+            ]
+          },
+          "docs": "Create an authorized session"
+        },
+        {
+          "info": {
+            "name": "Create a magic link (customer portal)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.nomos.energy/admin/magic_link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint can be used to create a customer portal magic link. The link (returned in the `link` property) allows your customer to directly access the customer portal. This is useful if you want to integrate the customer portal into your own application. Remember that it is your responsibility to make sure to provide the correct `customerId` for your user you'd like to log in."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nomos Authentication Market Partners API",
+    "version": "2026-05-27.curie"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Market Partners",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List market partners",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/market-partners",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[field][operator]",
+                "value": "",
+                "type": "query",
+                "description": "**Filterable fields:**\n- `name` (string)\n- `code` (string)\n- `created_at` (date)\n\nSee [Filtering Documentation](https://docs.nomos.energy/guides/filtering) for supported operators and syntax."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This is a list of all German electricity retailers, which a customer can select as their previous supplier in the checkout process. It can be used to build a dropdown menu in an embedded checkout to select the previous supplier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

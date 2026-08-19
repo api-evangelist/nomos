@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nomos Authentication Smart Meter Orders API",
+    "version": "2026-05-27.curie"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Smart Meter Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a smart meter order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/meter-orders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a meter order by its ID"
+        },
+        {
+          "info": {
+            "name": "List smart meter orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/meter-orders",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[field][operator]",
+                "value": "",
+                "type": "query",
+                "description": "**Filterable fields:**\n- `status` (enum): created, placed, check_submitted, check_reviewed, scheduled, installed, activated, cancelled\n- `customer` (string)\n- `subscription` (string)\n\nSee [Filtering Documentation](https://docs.nomos.energy/guides/filtering) for supported operators and syntax."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all meter orders for the organization"
+        },
+        {
+          "info": {
+            "name": "Create a smart meter order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.nomos.energy/meter-orders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new meter order for a subscription. The subscription's plan must support a smart-meter product type. Not applicable for feed-in subscriptions, as a smart meter must be present before starting a feed-in subscription."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

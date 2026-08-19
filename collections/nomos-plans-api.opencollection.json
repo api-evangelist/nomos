@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nomos Authentication Plans API",
+    "version": "2026-05-27.curie"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Plans",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/plans",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[field][operator]",
+                "value": "",
+                "type": "query",
+                "description": "**Filterable fields:**\n- `status` (string)\n- `created_at` (date)\n\nSee [Filtering Documentation](https://docs.nomos.energy/guides/filtering) for supported operators and syntax."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all plans with cursor pagination"
+        },
+        {
+          "info": {
+            "name": "Retrieve a plan",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/plans/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a plan details by its id"
+        },
+        {
+          "info": {
+            "name": "Retrieve a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/plans/:id/quote",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "zip_code",
+                "value": "",
+                "type": "query",
+                "description": "ZIP code for the delivery address"
+              },
+              {
+                "name": "usage",
+                "value": "",
+                "type": "query",
+                "description": "Annual electricity usage in kWh. Must be between 100 and 50000"
+              },
+              {
+                "name": "meter_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of the meter"
+              },
+              {
+                "name": "14a_module_1",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include §14a EnWG Module 1 (Pauschale Netzentgeltreduktion) in the quote. Only applicable to consumption plans; requests for feed-in plans are rejected with `400 BAD_REQUEST`."
+              },
+              {
+                "name": "14a_module_2",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include §14a EnWG Module 2 (Prozentuale Netzentgeltreduktion) in the quote. Only applicable to consumption plans; requests for feed-in plans are rejected with `400 BAD_REQUEST`."
+              },
+              {
+                "name": "is_tax_exempt",
+                "value": "",
+                "type": "query",
+                "description": "Whether the prospective customer is exempt from VAT. Private operators are typically exempt as Kleinunternehmer under [§ 19 UStG](https://www.gesetze-im-internet.de/ustg_1980/__19.html) when their revenue stayed under 25,000 EUR the previous year and stays under 100,000 EUR the current year; companies are not. Only affects feed-in plans. Consumption plans are always quoted inclusive of VAT."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a quote details by its id. All prices are inclusive of VAT, with one exception: feed-in payouts to a tax-exempt customer (`is_tax_exempt: true`, e.g. a Kleinunternehmer under § 19 UStG) are quoted without VAT, matching what the customer is later credited. The §14a EnWG module options only apply to consumption plans as feed-in plans do not pay grid fees."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nomos Authentication Leads API",
+    "version": "2026-05-27.curie"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Leads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List leads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/leads",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[field][operator]",
+                "value": "",
+                "type": "query",
+                "description": "**Filterable fields:**\n- `created_at` (date)\n\nSee [Filtering Documentation](https://docs.nomos.energy/guides/filtering) for supported operators and syntax."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all leads with cursor pagination. Leads for feed-in plans are only available from the `2026-05-27.curie` API version onwards."
+        },
+        {
+          "info": {
+            "name": "Create a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.nomos.energy/leads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint can be used to create a secure, pre-filled checkout link. The link (returned in the \"link\" property) contains all provided customer, address and meter data, allowing the prospect to finalize their signup with only providing the missing payment information, essentially enabling a 2-click checkout experience. Leads are tracked in the Nomos Dashboard for detailed conversion analytics. Leads can be created for both consumption and feed-in plans."
+        },
+        {
+          "info": {
+            "name": "Retrieve a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/leads/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve lead details by its id"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -208,3 +208,9 @@ tools:
   path: /admin/magic_link
   tags:
   - Authentication
+deployment:
+  mode: none
+  verified: derived
+  tools: 33
+  checked: '2026-08-12'
+  source: catalog MCP census

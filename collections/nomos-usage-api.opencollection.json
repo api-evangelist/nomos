@@ -1,0 +1,129 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nomos Authentication Usage API",
+    "version": "2026-05-27.curie"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Usage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve usage data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/subscriptions/:id/usage",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "resolution",
+                "value": "",
+                "type": "query",
+                "description": "The resolution of the consumption. 'auto' will choose a good resolution based on the start and end date."
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "The start date of the interval (inclusive). Defaults depend on the meter type.  \n        **Smart meters**: yesterday start of day (00:00:00) in the customers's timezone.\n        **Analog meters**: subscription start date or 12 months ago, whichever is later."
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "The end date of the interval (exclusive). Defaults depend on the meter type. \n        **Smart meters**: today start of day (00:00:00) in the customers's timezone.\n        **Analog meters**: latest available reading date."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the usage data for a subscription. Usage is the electricity consumed from the grid, or fed into the grid for feed-in subscriptions. Values are positive magnitudes for both directions; the direction comes from the plan. Results depend on the meter type.\n\n**Smart meters**:\nUsage data becomes available from 4pm on the following day. Metering Service Providers (MSB) might share preliminary values until replaced by final values up to the 8th working day of the following month. Data is availa"
+        },
+        {
+          "info": {
+            "name": "List meter readings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/meter-readings",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[field][operator]",
+                "value": "",
+                "type": "query",
+                "description": "**Filterable fields:**\n- `type` (string)\n- `subscription` (string)\n- `created_at` (date)\n\nSee [Filtering Documentation](https://docs.nomos.energy/guides/filtering) for supported operators and syntax."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all meter readings for the organization with cursor pagination. Customer users will only see their own. Use filter[subscription][eq]=<id> to scope to a single subscription."
+        },
+        {
+          "info": {
+            "name": "Create a meter reading",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.nomos.energy/meter-readings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Submit a customer-reported analog meter reading for the active meter of a subscription."
+        },
+        {
+          "info": {
+            "name": "Create a load forecast",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.nomos.energy/load-forecasts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is used to transmit a load forecast for a subscription. Values must be submitted by 9:00 a.m. local time on the previous day to be considered in the day-ahead auction, and at least 15 minutes before delivery to be included in continuous intraday trading. Data points must be strictly consecutive and can only be provided for full days at a time (local time of the subscription)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

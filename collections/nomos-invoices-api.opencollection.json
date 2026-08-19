@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nomos Authentication Invoices API",
+    "version": "2026-05-27.curie"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invoices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/invoices/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Download the PDF of an invoice"
+        },
+        {
+          "info": {
+            "name": "List invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/invoices",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[field][operator]",
+                "value": "",
+                "type": "query",
+                "description": "**Filterable fields:**\n- `status` (enum): open, paid, voided, uncollectible\n- `period_start` (date)\n- `period_end` (date)\n- `type` (enum): usage, prepayment, void\n- `subscription` (string)\n\nSee [Filtering Documentation](https://docs.nomos.energy/guides/filtering) for supported operators and syntax."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Invoices summarise the amounts owed/payed for a subscription. Usage invoices (`type: \"usage\"`) bill the metered electricity consumption of a billing period and include all line items such as energy, grid fees and taxes. Prepayment invoices (`type: \"prepayment\"`) charge a fixed advance amount and carry no usage; an unpaid prepayment that is cancelled surfaces with `status: \"uncollectible\"`. Void invoices (`type: \"void\"`) are Storno documents that reverse a previously paid invoice and reference th"
+        },
+        {
+          "info": {
+            "name": "Retrieve an invoice PDF",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/invoices/:id/file",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The invoice id to access the pdf file"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a PDF file of an invoice from the storage"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

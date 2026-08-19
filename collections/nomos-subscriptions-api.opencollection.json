@@ -1,0 +1,144 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nomos Authentication Subscriptions API",
+    "version": "2026-05-27.curie"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/subscriptions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a subscription details by its id"
+        },
+        {
+          "info": {
+            "name": "Update a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.nomos.energy/subscriptions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update the editable fields of a subscription. Only the allow-listed properties may be changed; any other field is ignored. `billing_address` replaces the subscription's billing address (all of street, house number, zip, city are required); the address row is mutated in place, so a row shared across a customer's subscriptions changes everywhere it is referenced. `payment_method` attaches a new SEPA direct-debit mandate to the subscription, replacing the current mandate. `metadata` is merged key-b"
+        },
+        {
+          "info": {
+            "name": "Terminate a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.nomos.energy/subscriptions/:id/terminate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Terminate a subscription. Three reasons are supported:\n\n- `ORDINARY`: regular termination. `intended_end_at` is optional; when omitted, the plan's cancellation period applies.\n- `MOVE_OUT`: special termination right tied to a move-out date. `intended_end_at` is mandatory and still has to leave the grid operator a few working days of notice.\n- `WITHDRAWAL`: 14-day cooling-off period (Widerruf) after contract confirmation. The end date is calculated to comply with grid-operator notice periods.\n\nAl"
+        },
+        {
+          "info": {
+            "name": "List subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/subscriptions",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter[field][operator]",
+                "value": "",
+                "type": "query",
+                "description": "**Filterable fields:**\n- `status` (enum): pending, active, ended\n- `customer` (string)\n- `plan` (string)\n- `created_at` (date)\n- `updated_at` (date)\n\nSee [Filtering Documentation](https://docs.nomos.energy/guides/filtering) for supported operators and syntax."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all subscriptions"
+        },
+        {
+          "info": {
+            "name": "Create a subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.nomos.energy/subscriptions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new subscription. The plan's direction decides which signup rules apply.\n\n**Consumption plans:**\n- `meter.type` may be `smart` or `analog`\n- `customer.vat_id` is optional\n- `intended_start_date` may be any future date; a date in the past is corrected to the next possible date, and when omitted, the next possible start date is used\n- `previous_supplier` may be set to cancel the customer's existing contract\n- `product_orders` may order a smart meter or §14a EnWG grid fee reductions, if th"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

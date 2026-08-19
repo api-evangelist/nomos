@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Nomos Authentication Prices API",
+    "version": "2026-05-27.curie"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Prices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a price time series",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nomos.energy/subscriptions/:id/prices",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Start date of the period at 00:00:00 in local time of the customer (format yyyy-mm-dd)"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "End date of the period at 23:59:59 in local time of the customer (format yyyy-mm-dd)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a price object for a given subscription. For a consumption subscription this is the variable price time series the customer pays and can optimize consumption against; for a feed-in subscription it is the payout the customer is credited per kWh, based on EPEX day-ahead spot prices and without grid fees. All prices are inclusive of VAT, except feed-in payouts to a VAT-exempt customer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
