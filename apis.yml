@@ -44,6 +44,19 @@ tags:
 - Metering
 - Smart Meter
 - Germany
+- Authentication
+- Webhook
+tags_raw:
+- Company
+- Energy
+- Electricity
+- Utilities
+- Embedded Finance
+- Dynamic Pricing
+- Billing
+- Metering
+- Smart Meter
+- Germany
 - OAuth
 - Webhooks
 apis:
@@ -85,6 +98,8 @@ apis:
   humanURL: https://docs.nomos.energy
   baseURL: https://api.nomos.energy
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -213,6 +228,8 @@ apis:
   humanURL: https://docs.nomos.energy
   baseURL: https://api.nomos.energy
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
