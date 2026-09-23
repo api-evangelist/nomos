@@ -1,18 +1,7 @@
 {
   "provider": "nomos",
   "sources": [
-    "nomos-authentication-api-openapi.yml",
-    "nomos-customers-api-openapi.yml",
-    "nomos-events-api-openapi.yml",
-    "nomos-grid-fee-reductions-api-openapi.yml",
-    "nomos-invoices-api-openapi.yml",
-    "nomos-leads-api-openapi.yml",
-    "nomos-market-partners-api-openapi.yml",
-    "nomos-plans-api-openapi.yml",
-    "nomos-prices-api-openapi.yml",
-    "nomos-smart-meter-orders-api-openapi.yml",
-    "nomos-subscriptions-api-openapi.yml",
-    "nomos-usage-api-openapi.yml"
+    "_original/nomos-openapi-original.json"
   ],
   "outputs": [
     "nomos-authentication-api-openapi.yml",
@@ -31,6 +20,23 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "nomos-openapi-original.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "nomos-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nomos-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nomos-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nomos-grid-fee-reductions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nomos-invoices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nomos-leads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nomos-market-partners-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nomos-plans-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nomos-prices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nomos-smart-meter-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nomos-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nomos-usage-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Nomos Authentication Usage API
+  title: Nomos Usage API
   version: 2026-05-27.curie
 servers:
 - url: https://api.nomos.energy
@@ -473,18 +473,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrInternalServerError'
+      operationId: getSubscriptionsByIdUsage
+      x-operation-id-source: derived
   /meter-readings:
     get:
       tags:
       - Usage
       summary: List meter readings
-      description: Retrieve all meter readings for the organization with cursor pagination. Customer users will only see their own. Use filter[subscription][eq]=<id> to scope to a single subscription.
+      description: Retrieve all meter readings for the organization with cursor pagination. Customer users will only see their own. Use filter[subscription][eq]= to scope to a single subscription.
       security:
       - Bearer: []
       parameters:
       - schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         required: false
         name: cursor
         in: query
@@ -497,7 +500,6 @@ paths:
         name: limit
         in: query
       - schema:
-          nullable: true
           description: '**Filterable fields:**
 
             - `type` (string)
@@ -539,8 +541,9 @@ paths:
                     items:
                       $ref: '#/components/schemas/MeterReading'
                   next_page:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     example: eyJsYXN0X2NyZWF0ZWRfYXQiOiIyMDI1LTAxLTE1VDEwOjMwOjAwLjAwMFoiLCJsYXN0X2lkIjoic3ViX21pNGYwb2RhNng5bTdnY3N2amswb2xlMSIsImxpbWl0IjoyMH0=
                   has_more:
                     type: boolean
@@ -608,6 +611,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrInternalServerError'
+      operationId: getMeterReadings
+      x-operation-id-source: derived
     post:
       tags:
       - Usage
@@ -698,6 +703,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrInternalServerError'
+      operationId: postMeterReadings
+      x-operation-id-source: derived
   /load-forecasts:
     post:
       tags:
@@ -833,485 +840,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrInternalServerError'
+      operationId: postLoadForecasts
+      x-operation-id-source: derived
 components:
   schemas:
-    InsertMeterReading:
-      type: object
-      properties:
-        value:
-          type: number
-          minimum: 0
-          exclusiveMinimum: true
-          description: Cumulative meter value in kWh
-          example: 150
-        timestamp:
-          type: string
-          format: date-time
-          description: Timestamp of the reading in UTC
-          example: '2024-03-14T12:00:00Z'
-        message:
-          type: string
-          maxLength: 500
-          description: Optional message from the submitter
-          example: Reading to start the subscription
-      required:
-      - value
-      - timestamp
-    ErrUnauthorized:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - UNAUTHORIZED
-          description: The error code related to the status code.
-          example: UNAUTHORIZED
-        message:
-          type: string
-          description: A human readable message describing the issue.
-          example: Invalid or malformed token
-        requestId:
-          type: string
-          description: The request id to be used for debugging and error reporting.
-          example: 37a04f8f-e791-491c-81e1-86cd304649bb
-        docs:
-          type: string
-          description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/UNAUTHORIZED
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - invalid_type
-                - too_big
-                - too_small
-                - invalid_format
-                - not_multiple_of
-                - unrecognized_keys
-                - invalid_union
-                - invalid_key
-                - invalid_element
-                - invalid_value
-                - custom
-                - unserviceable_zip
-                - ended_subscription
-                - duplicate_grid_reduction
-                - missing_smart_meter
-                - missing_module_1
-                - unsupported_product
-                - unsupported_meter_order
-                - duplicate_meter_order
-                - unsupported_meter
-                - out_of_period_meter_reading
-                - unsupported_meter_reading
-                - duplicate_meter_reading
-                - implausible_meter_reading
-                - duplicate_customer_email
-                - invalid_iban
-                - upgrade_api_version
-                - withdrawal_not_allowed
-                - invalid_termination_date
-                - subscription_not_started
-                example: invalid_type
-              field:
-                type: string
-                example: favoriteNumbers.1
-              message:
-                type: string
-                example: 'Invalid input: expected string, received number'
-            required:
-            - code
-            - field
-            - message
-          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
-      required:
-      - code
-      - message
-      - requestId
-      - docs
-    MeterReading:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - meter_reading
-        id:
-          type: string
-          description: The unique identifier for the meter reading
-          example: mr_rocbrf1u5e48mm0reeqoag90
-        customer:
-          type: string
-          description: The unique identifier for the customer
-          example: cus_a8n8ol7yd4h0wohx824f0bui
-        subscription:
-          type: string
-          description: The unique identifier for the subscription
-          example: sub_rocbrf1u5e48mm0reeqoag90
-        meter:
-          type: string
-          description: The unique identifier for the meter
-          example: mtr_azk4zue2ijx4ff1dbjt14m5h
-        value:
-          type: number
-          description: The value of the meter reading
-          example: 150
-        timestamp:
-          type: string
-          format: date-time
-          description: Timestamp get's always adjusted to the start of the day in Europe/Berlin
-        type:
-          type: string
-          enum:
-          - customer_report
-          - grid_reading
-          - grid_estimation
-          description: The type of the meter reading
-          example: customer_report
-        created_at:
-          type: string
-          format: date-time
-      required:
-      - object
-      - id
-      - customer
-      - subscription
-      - meter
-      - value
-      - timestamp
-      - type
-      - created_at
-    ErrInternalServerError:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - INTERNAL_SERVER_ERROR
-          description: The error code related to the status code.
-          example: INTERNAL_SERVER_ERROR
-        message:
-          type: string
-          description: A human readable message describing the issue.
-          example: Internal Server Error
-        requestId:
-          type: string
-          description: The request id to be used for debugging and error reporting.
-          example: 37a04f8f-e791-491c-81e1-86cd304649bb
-        docs:
-          type: string
-          description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/INTERNAL_SERVER_ERROR
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - invalid_type
-                - too_big
-                - too_small
-                - invalid_format
-                - not_multiple_of
-                - unrecognized_keys
-                - invalid_union
-                - invalid_key
-                - invalid_element
-                - invalid_value
-                - custom
-                - unserviceable_zip
-                - ended_subscription
-                - duplicate_grid_reduction
-                - missing_smart_meter
-                - missing_module_1
-                - unsupported_product
-                - unsupported_meter_order
-                - duplicate_meter_order
-                - unsupported_meter
-                - out_of_period_meter_reading
-                - unsupported_meter_reading
-                - duplicate_meter_reading
-                - implausible_meter_reading
-                - duplicate_customer_email
-                - invalid_iban
-                - upgrade_api_version
-                - withdrawal_not_allowed
-                - invalid_termination_date
-                - subscription_not_started
-                example: invalid_type
-              field:
-                type: string
-                example: favoriteNumbers.1
-              message:
-                type: string
-                example: 'Invalid input: expected string, received number'
-            required:
-            - code
-            - field
-            - message
-          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
-      required:
-      - code
-      - message
-      - requestId
-      - docs
-    ErrConflict:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - CONFLICT
-          description: The error code related to the status code.
-          example: CONFLICT
-        message:
-          type: string
-          description: A human readable message describing the issue.
-          example: Resource already exists
-        requestId:
-          type: string
-          description: The request id to be used for debugging and error reporting.
-          example: 37a04f8f-e791-491c-81e1-86cd304649bb
-        docs:
-          type: string
-          description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/CONFLICT
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - invalid_type
-                - too_big
-                - too_small
-                - invalid_format
-                - not_multiple_of
-                - unrecognized_keys
-                - invalid_union
-                - invalid_key
-                - invalid_element
-                - invalid_value
-                - custom
-                - unserviceable_zip
-                - ended_subscription
-                - duplicate_grid_reduction
-                - missing_smart_meter
-                - missing_module_1
-                - unsupported_product
-                - unsupported_meter_order
-                - duplicate_meter_order
-                - unsupported_meter
-                - out_of_period_meter_reading
-                - unsupported_meter_reading
-                - duplicate_meter_reading
-                - implausible_meter_reading
-                - duplicate_customer_email
-                - invalid_iban
-                - upgrade_api_version
-                - withdrawal_not_allowed
-                - invalid_termination_date
-                - subscription_not_started
-                example: invalid_type
-              field:
-                type: string
-                example: favoriteNumbers.1
-              message:
-                type: string
-                example: 'Invalid input: expected string, received number'
-            required:
-            - code
-            - field
-            - message
-          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
-      required:
-      - code
-      - message
-      - requestId
-      - docs
-    ErrNotFound:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - NOT_FOUND
-          description: The error code related to the status code.
-          example: NOT_FOUND
-        message:
-          type: string
-          description: A human readable message describing the issue.
-          example: Resource not found
-        requestId:
-          type: string
-          description: The request id to be used for debugging and error reporting.
-          example: 37a04f8f-e791-491c-81e1-86cd304649bb
-        docs:
-          type: string
-          description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/NOT_FOUND
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - invalid_type
-                - too_big
-                - too_small
-                - invalid_format
-                - not_multiple_of
-                - unrecognized_keys
-                - invalid_union
-                - invalid_key
-                - invalid_element
-                - invalid_value
-                - custom
-                - unserviceable_zip
-                - ended_subscription
-                - duplicate_grid_reduction
-                - missing_smart_meter
-                - missing_module_1
-                - unsupported_product
-                - unsupported_meter_order
-                - duplicate_meter_order
-                - unsupported_meter
-                - out_of_period_meter_reading
-                - unsupported_meter_reading
-                - duplicate_meter_reading
-                - implausible_meter_reading
-                - duplicate_customer_email
-                - invalid_iban
-                - upgrade_api_version
-                - withdrawal_not_allowed
-                - invalid_termination_date
-                - subscription_not_started
-                example: invalid_type
-              field:
-                type: string
-                example: favoriteNumbers.1
-              message:
-                type: string
-                example: 'Invalid input: expected string, received number'
-            required:
-            - code
-            - field
-            - message
-          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
-      required:
-      - code
-      - message
-      - requestId
-      - docs
-    LoadForecasts:
-      type: object
-      properties:
-        scope:
-          type: string
-          enum:
-          - subscription
-        subscription:
-          type: string
-        start:
-          type: string
-          format: date-time
-        end:
-          type: string
-          format: date-time
-        total:
-          type: number
-      required:
-      - scope
-      - subscription
-      - start
-      - end
-      - total
-    ErrUnprocessableEntity:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - UNPROCESSABLE_ENTITY
-          description: The error code related to the status code.
-          example: UNPROCESSABLE_ENTITY
-        message:
-          type: string
-          description: A human readable message describing the issue.
-          example: 'invalid_enum_value in ''status'': Invalid enum value. Expected ''pending'' | ''active'' | ''ended'''
-        requestId:
-          type: string
-          description: The request id to be used for debugging and error reporting.
-          example: 37a04f8f-e791-491c-81e1-86cd304649bb
-        docs:
-          type: string
-          description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/UNPROCESSABLE_ENTITY
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - invalid_type
-                - too_big
-                - too_small
-                - invalid_format
-                - not_multiple_of
-                - unrecognized_keys
-                - invalid_union
-                - invalid_key
-                - invalid_element
-                - invalid_value
-                - custom
-                - unserviceable_zip
-                - ended_subscription
-                - duplicate_grid_reduction
-                - missing_smart_meter
-                - missing_module_1
-                - unsupported_product
-                - unsupported_meter_order
-                - duplicate_meter_order
-                - unsupported_meter
-                - out_of_period_meter_reading
-                - unsupported_meter_reading
-                - duplicate_meter_reading
-                - implausible_meter_reading
-                - duplicate_customer_email
-                - invalid_iban
-                - upgrade_api_version
-                - withdrawal_not_allowed
-                - invalid_termination_date
-                - subscription_not_started
-                example: invalid_type
-              field:
-                type: string
-                example: favoriteNumbers.1
-              message:
-                type: string
-                example: 'Invalid input: expected string, received number'
-            required:
-            - code
-            - field
-            - message
-          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
-      required:
-      - code
-      - message
-      - requestId
-      - docs
     ErrBadRequest:
       type: object
       properties:
@@ -1388,19 +920,19 @@ components:
       - message
       - requestId
       - docs
-    ErrPaymentRequired:
+    ErrUnprocessableEntity:
       type: object
       properties:
         code:
           type: string
           enum:
-          - PAYMENT_REQUIRED
+          - UNPROCESSABLE_ENTITY
           description: The error code related to the status code.
-          example: PAYMENT_REQUIRED
+          example: UNPROCESSABLE_ENTITY
         message:
           type: string
           description: A human readable message describing the issue.
-          example: Payment required
+          example: 'invalid_enum_value in ''status'': Invalid enum value. Expected ''pending'' | ''active'' | ''ended'''
         requestId:
           type: string
           description: The request id to be used for debugging and error reporting.
@@ -1408,7 +940,156 @@ components:
         docs:
           type: string
           description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/PAYMENT_REQUIRED
+          example: https://docs.nomos.energy/api-references/errors/UNPROCESSABLE_ENTITY
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    InsertMeterReading:
+      type: object
+      properties:
+        value:
+          type: number
+          description: Cumulative meter value in kWh
+          example: 150
+          exclusiveMinimum: 0
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the reading in UTC
+          example: '2024-03-14T12:00:00Z'
+        message:
+          type: string
+          maxLength: 500
+          description: Optional message from the submitter
+          example: Reading to start the subscription
+      required:
+      - value
+      - timestamp
+    MeterReading:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - meter_reading
+        id:
+          type: string
+          description: The unique identifier for the meter reading
+          example: mr_rocbrf1u5e48mm0reeqoag90
+        customer:
+          type: string
+          description: The unique identifier for the customer
+          example: cus_a8n8ol7yd4h0wohx824f0bui
+        subscription:
+          type: string
+          description: The unique identifier for the subscription
+          example: sub_rocbrf1u5e48mm0reeqoag90
+        meter:
+          type: string
+          description: The unique identifier for the meter
+          example: mtr_azk4zue2ijx4ff1dbjt14m5h
+        value:
+          type: number
+          description: The value of the meter reading
+          example: 150
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp get's always adjusted to the start of the day in Europe/Berlin
+        type:
+          type: string
+          enum:
+          - customer_report
+          - grid_reading
+          - grid_estimation
+          description: The type of the meter reading
+          example: customer_report
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - object
+      - id
+      - customer
+      - subscription
+      - meter
+      - value
+      - timestamp
+      - type
+      - created_at
+    ErrInternalServerError:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - INTERNAL_SERVER_ERROR
+          description: The error code related to the status code.
+          example: INTERNAL_SERVER_ERROR
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Internal Server Error
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/INTERNAL_SERVER_ERROR
         errors:
           type: array
           items:
@@ -1540,6 +1221,158 @@ components:
       - message
       - requestId
       - docs
+    ErrNotFound:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - NOT_FOUND
+          description: The error code related to the status code.
+          example: NOT_FOUND
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Resource not found
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/NOT_FOUND
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrConflict:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - CONFLICT
+          description: The error code related to the status code.
+          example: CONFLICT
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Resource already exists
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/CONFLICT
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
     ErrForbidden:
       type: object
       properties:
@@ -1616,6 +1449,29 @@ components:
       - message
       - requestId
       - docs
+    LoadForecasts:
+      type: object
+      properties:
+        scope:
+          type: string
+          enum:
+          - subscription
+        subscription:
+          type: string
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        total:
+          type: number
+      required:
+      - scope
+      - subscription
+      - start
+      - end
+      - total
     ErrMethodNotAllowed:
       type: object
       properties:
@@ -1637,6 +1493,158 @@ components:
           type: string
           description: The docs related to the error code.
           example: https://docs.nomos.energy/api-references/errors/METHOD_NOT_ALLOWED
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrPaymentRequired:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - PAYMENT_REQUIRED
+          description: The error code related to the status code.
+          example: PAYMENT_REQUIRED
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Payment required
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/PAYMENT_REQUIRED
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrUnauthorized:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - UNAUTHORIZED
+          description: The error code related to the status code.
+          example: UNAUTHORIZED
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Invalid or malformed token
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/UNAUTHORIZED
         errors:
           type: array
           items:
