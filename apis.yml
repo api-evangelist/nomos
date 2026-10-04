@@ -274,6 +274,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/nomos-capability-edges.yml
+  name: Nomos Business Capability Map
 - type: Overlay
   url: overlays/nomos-openapi-overlay.yaml
 # --- identity / link properties ---
