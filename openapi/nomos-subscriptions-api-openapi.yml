@@ -885,53 +885,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Address:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - address
-          description: Type of the object, always 'address'
-        id:
-          type: string
-          description: Unique identifier for the address
-          example: adr_mi4f0oda6x9m7gcsvjk0ole1
-        street:
-          type: string
-          minLength: 1
-          description: Street name of the address
-          example: Torstraße
-        house_number:
-          type: string
-          minLength: 1
-          description: House number including any additions
-          example: '119'
-        zip:
-          type: string
-          minLength: 5
-          description: ZIP/Postal code
-          example: '10115'
-        city:
-          type: string
-          minLength: 1
-          description: City name
-          example: Berlin
-        created_at:
-          anyOf:
-          - type: string
-          - type: string
-            format: date-time
-          description: Timestamp when the address was created
-          example: '2024-03-14T12:00:00Z'
-      required:
-      - object
-      - id
-      - street
-      - house_number
-      - zip
-      - city
-      - created_at
     Customer:
       anyOf:
       - type: object
@@ -1051,690 +1004,6 @@ components:
         - email
         - created_at
         title: Company
-    Supplier:
-      type:
-      - object
-      - 'null'
-      properties:
-        object:
-          type: string
-          enum:
-          - supplier
-          description: Type of the object, always 'supplier'
-        id:
-          type: string
-          description: Unique identifier for the supplier
-          example: mp_a0x6jm5h92wde6s5dnuvha4c
-        name:
-          type: string
-          minLength: 1
-          description: Name of the energy supplier
-          example: Sample Energy GmbH
-        country:
-          type: string
-          minLength: 2
-          maxLength: 2
-          description: Two-letter country code
-          example: DE
-        created_at:
-          anyOf:
-          - type: string
-          - type: string
-            format: date-time
-          description: Timestamp when the supplier was created
-          example: '2024-03-14T12:00:00Z'
-      required:
-      - object
-      - id
-      - name
-      - country
-      - created_at
-    Subscription:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - subscription
-          description: Type of the object, always 'subscription'
-        id:
-          type: string
-          description: Unique identifier for the subscription
-          example: sub_rocbrf1u5e48mm0reeqoag90
-        plan:
-          type: string
-          description: ID of the plan
-          example: pln_ctj3tjzc7dywznuw1dy80lb3
-        customer:
-          $ref: '#/components/schemas/Customer'
-        address:
-          $ref: '#/components/schemas/Address'
-        meter:
-          $ref: '#/components/schemas/Meter'
-        payment_method:
-          $ref: '#/components/schemas/PaymentMethod'
-        supplier:
-          $ref: '#/components/schemas/Supplier'
-        number:
-          type:
-          - string
-          - 'null'
-          description: Human-readable identifier for the subscription
-          example: 4X44EMKX
-        status:
-          type: string
-          enum:
-          - pending
-          - active
-          - ended
-          description: Status of the subscription
-          example: active
-        estimated_usage:
-          type: number
-          description: Estimated yearly usage in kWh, provided by the customer in the checkout.
-        created_at:
-          anyOf:
-          - type: string
-          - type: string
-            format: date-time
-          description: Timestamp when the subscription was created
-          example: '2024-03-14T12:00:00Z'
-        updated_at:
-          anyOf:
-          - type: string
-          - type: string
-            format: date-time
-          description: Timestamp when the subscription was updated
-          example: '2024-03-14T12:00:00Z'
-        start_at:
-          anyOf:
-          - type: string
-          - type: string
-            format: date-time
-          - {}
-          description: Timestamp when delivery was started / will start
-          example: '2024-03-14T12:00:00Z'
-        terminated_at:
-          anyOf:
-          - type: string
-          - type: string
-            format: date-time
-          - {}
-          description: Timestamp when delivery was terminated
-          example: '2024-03-14T12:00:00Z'
-        end_at:
-          anyOf:
-          - type: string
-          - type: string
-            format: date-time
-          - {}
-          description: Timestamp when the subscription was ended / will end
-          example: '2024-03-14T12:00:00Z'
-        metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties: {}
-          description: Metadata of the subscription. Store any type of information, custom to your needs. E.g. the `user_id` of your in-house user. Restricted to 10KB.
-          example:
-            utm_source: google
-            utm_campaign: campaign_name
-            user_id: '1234567890'
-        type:
-          type: string
-          enum:
-          - consumption
-          - feed_in
-          description: Whether the subscription covers electricity consumption or feed-in. Feed-in subscriptions are only available from the 2026-05-27.curie API version onwards.
-          example: consumption
-        billing_address:
-          $ref: '#/components/schemas/Address'
-      required:
-      - object
-      - id
-      - plan
-      - customer
-      - address
-      - meter
-      - payment_method
-      - status
-      - estimated_usage
-      - created_at
-      - updated_at
-      - type
-      - billing_address
-    InsertMeter:
-      type: object
-      properties:
-        number:
-          type: string
-          minLength: 1
-          description: Meter identification number
-          example: 1APA0195124010
-        type:
-          type: string
-          enum:
-          - smart
-          - analog
-          description: Type of the meter. Must be 'smart' for feed-in plans
-          example: smart
-        estimated_usage:
-          type: number
-          minimum: 100
-          description: Estimated yearly consumption in kWh
-          example: 2500
-        malo:
-          type:
-          - string
-          - 'null'
-          description: Market Location Identifier (MaLo) for the meter
-          example: '50491310272'
-      required:
-      - number
-      - type
-      - estimated_usage
-    InsertPaymentMethod:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - sepa_debit
-          description: Type of payment method
-          example: sepa_debit
-        sepa_debit:
-          type: object
-          properties:
-            iban:
-              type: string
-              pattern: ^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$
-              description: IBAN number
-              example: DE68500105178297336485
-            account_holder:
-              type: string
-              minLength: 1
-              description: Name of the account holder
-              example: John Doe
-          required:
-          - iban
-          - account_holder
-      required:
-      - type
-      - sepa_debit
-      description: Attach a new SEPA direct-debit mandate. The new payment method replaces the subscription's current mandate.
-    ErrBadRequest:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - BAD_REQUEST
-          description: The error code related to the status code.
-          example: BAD_REQUEST
-        message:
-          type: string
-          description: A human readable message describing the issue.
-          example: 'invalid_type in ''end'': Required'
-        requestId:
-          type: string
-          description: The request id to be used for debugging and error reporting.
-          example: 37a04f8f-e791-491c-81e1-86cd304649bb
-        docs:
-          type: string
-          description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/BAD_REQUEST
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - invalid_type
-                - too_big
-                - too_small
-                - invalid_format
-                - not_multiple_of
-                - unrecognized_keys
-                - invalid_union
-                - invalid_key
-                - invalid_element
-                - invalid_value
-                - custom
-                - unserviceable_zip
-                - ended_subscription
-                - duplicate_grid_reduction
-                - missing_smart_meter
-                - missing_module_1
-                - unsupported_product
-                - unsupported_meter_order
-                - duplicate_meter_order
-                - unsupported_meter
-                - out_of_period_meter_reading
-                - unsupported_meter_reading
-                - duplicate_meter_reading
-                - implausible_meter_reading
-                - duplicate_customer_email
-                - invalid_iban
-                - upgrade_api_version
-                - withdrawal_not_allowed
-                - invalid_termination_date
-                - subscription_not_started
-                example: invalid_type
-              field:
-                type: string
-                example: favoriteNumbers.1
-              message:
-                type: string
-                example: 'Invalid input: expected string, received number'
-            required:
-            - code
-            - field
-            - message
-          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
-      required:
-      - code
-      - message
-      - requestId
-      - docs
-    ErrMethodNotAllowed:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - METHOD_NOT_ALLOWED
-          description: The error code related to the status code.
-          example: METHOD_NOT_ALLOWED
-        message:
-          type: string
-          description: A human readable message describing the issue.
-          example: Method not allowed
-        requestId:
-          type: string
-          description: The request id to be used for debugging and error reporting.
-          example: 37a04f8f-e791-491c-81e1-86cd304649bb
-        docs:
-          type: string
-          description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/METHOD_NOT_ALLOWED
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - invalid_type
-                - too_big
-                - too_small
-                - invalid_format
-                - not_multiple_of
-                - unrecognized_keys
-                - invalid_union
-                - invalid_key
-                - invalid_element
-                - invalid_value
-                - custom
-                - unserviceable_zip
-                - ended_subscription
-                - duplicate_grid_reduction
-                - missing_smart_meter
-                - missing_module_1
-                - unsupported_product
-                - unsupported_meter_order
-                - duplicate_meter_order
-                - unsupported_meter
-                - out_of_period_meter_reading
-                - unsupported_meter_reading
-                - duplicate_meter_reading
-                - implausible_meter_reading
-                - duplicate_customer_email
-                - invalid_iban
-                - upgrade_api_version
-                - withdrawal_not_allowed
-                - invalid_termination_date
-                - subscription_not_started
-                example: invalid_type
-              field:
-                type: string
-                example: favoriteNumbers.1
-              message:
-                type: string
-                example: 'Invalid input: expected string, received number'
-            required:
-            - code
-            - field
-            - message
-          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
-      required:
-      - code
-      - message
-      - requestId
-      - docs
-    TerminateSubscription:
-      oneOf:
-      - type: object
-        properties:
-          reason:
-            type: string
-            enum:
-            - ORDINARY
-          intended_end_at:
-            type: string
-            format: date-time
-            description: Optional exclusive end timestamp. Must be exactly midnight Europe/Berlin (any zone offset accepted as long as the instant is 00:00 Berlin). From that moment the customer is no longer supplied; the last day of supply is the day before. When omitted, the plan's cancellation period applies.
-            example: '2026-12-31T00:00:00+01:00'
-        required:
-        - reason
-      - type: object
-        properties:
-          reason:
-            type: string
-            enum:
-            - MOVE_OUT
-          intended_end_at:
-            type: string
-            format: date-time
-            description: Exclusive end timestamp for the move-out. Must be exactly midnight Europe/Berlin (any zone offset accepted as long as the instant is 00:00 Berlin). Mandatory for `MOVE_OUT`. Must respect the grid operator's working-day notice.
-            example: '2026-12-31T00:00:00+01:00'
-        required:
-        - reason
-        - intended_end_at
-      - type: object
-        properties:
-          reason:
-            type: string
-            enum:
-            - WITHDRAWAL
-        required:
-        - reason
-    Meter:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - meter
-          description: Type of the object, always 'meter'
-        id:
-          type: string
-          description: Unique identifier for the meter
-          example: mtr_tihqsqnxx3xs1gonbnk0ccou
-        melo:
-          type:
-          - string
-          - 'null'
-          description: Metering Location ID
-          example: DE0000001234567890
-        number:
-          type: string
-          minLength: 1
-          description: Meter identification number
-          example: 1APA0195124010
-        type:
-          type: string
-          enum:
-          - smart
-          - analog
-          description: Type of the meter. Must be 'smart' for feed-in plans
-          example: smart
-        malo:
-          type:
-          - string
-          - 'null'
-          description: Market Location Identifier (MaLo) for the meter
-          example: '50491310272'
-        created_at:
-          anyOf:
-          - type: string
-          - type: string
-            format: date-time
-          description: Timestamp when the meter was created
-          example: '2024-03-14T12:00:00Z'
-      required:
-      - object
-      - id
-      - number
-      - type
-      - created_at
-    PaymentMethod:
-      type: object
-      properties:
-        object:
-          type: string
-          enum:
-          - payment_method
-          description: Type of the object, always 'payment_method'
-        id:
-          type: string
-          description: Unique identifier for the payment method
-          example: pm_adc9utqqpcp7tx054l7vg56s2
-        type:
-          type: string
-          enum:
-          - sepa_debit
-          description: Type of payment method - Currently only SEPA direct debit is supported
-          example: sepa_debit
-        sepa_debit:
-          type: object
-          properties:
-            iban:
-              type: string
-              description: International Bank Account Number (IBAN) for SEPA direct debit, partially masked for security
-              example: DE************6485
-            account_holder:
-              type: string
-              minLength: 1
-              description: Full legal name of the bank account holder as registered with the bank
-              example: John Doe
-          required:
-          - iban
-          - account_holder
-        created_at:
-          anyOf:
-          - type: string
-          - type: string
-            format: date-time
-          description: Timestamp when the payment method was created
-          example: '2024-03-14T12:00:00Z'
-      required:
-      - object
-      - id
-      - type
-      - sepa_debit
-      - created_at
-    InsertAddress:
-      type: object
-      properties:
-        street:
-          type: string
-          minLength: 2
-          maxLength: 100
-          pattern: '[a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC]'
-          description: Street name of the address
-          example: Torstraße
-        house_number:
-          type: string
-          minLength: 1
-          maxLength: 10
-          pattern: ^[A-Za-z0-9\-/\s]+$
-          description: House number including any additions
-          example: '119'
-        zip:
-          type: string
-          minLength: 5
-          maxLength: 5
-          pattern: ^\d+$
-          description: ZIP/Postal code
-          example: '10115'
-        city:
-          type: string
-          minLength: 2
-          maxLength: 100
-          pattern: ^[^\d]*$
-          description: City name
-          example: Berlin
-      required:
-      - street
-      - house_number
-      - zip
-      - city
-      description: New billing address for the subscription
-    ErrTooManyRequests:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - TOO_MANY_REQUESTS
-          description: The error code related to the status code.
-          example: TOO_MANY_REQUESTS
-        message:
-          type: string
-          description: A human readable message describing the issue.
-          example: Wait 30 seconds before retrying.
-        requestId:
-          type: string
-          description: The request id to be used for debugging and error reporting.
-          example: 37a04f8f-e791-491c-81e1-86cd304649bb
-        docs:
-          type: string
-          description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/TOO_MANY_REQUESTS
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - invalid_type
-                - too_big
-                - too_small
-                - invalid_format
-                - not_multiple_of
-                - unrecognized_keys
-                - invalid_union
-                - invalid_key
-                - invalid_element
-                - invalid_value
-                - custom
-                - unserviceable_zip
-                - ended_subscription
-                - duplicate_grid_reduction
-                - missing_smart_meter
-                - missing_module_1
-                - unsupported_product
-                - unsupported_meter_order
-                - duplicate_meter_order
-                - unsupported_meter
-                - out_of_period_meter_reading
-                - unsupported_meter_reading
-                - duplicate_meter_reading
-                - implausible_meter_reading
-                - duplicate_customer_email
-                - invalid_iban
-                - upgrade_api_version
-                - withdrawal_not_allowed
-                - invalid_termination_date
-                - subscription_not_started
-                example: invalid_type
-              field:
-                type: string
-                example: favoriteNumbers.1
-              message:
-                type: string
-                example: 'Invalid input: expected string, received number'
-            required:
-            - code
-            - field
-            - message
-          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
-      required:
-      - code
-      - message
-      - requestId
-      - docs
-    ErrUnauthorized:
-      type: object
-      properties:
-        code:
-          type: string
-          enum:
-          - UNAUTHORIZED
-          description: The error code related to the status code.
-          example: UNAUTHORIZED
-        message:
-          type: string
-          description: A human readable message describing the issue.
-          example: Invalid or malformed token
-        requestId:
-          type: string
-          description: The request id to be used for debugging and error reporting.
-          example: 37a04f8f-e791-491c-81e1-86cd304649bb
-        docs:
-          type: string
-          description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/UNAUTHORIZED
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - invalid_type
-                - too_big
-                - too_small
-                - invalid_format
-                - not_multiple_of
-                - unrecognized_keys
-                - invalid_union
-                - invalid_key
-                - invalid_element
-                - invalid_value
-                - custom
-                - unserviceable_zip
-                - ended_subscription
-                - duplicate_grid_reduction
-                - missing_smart_meter
-                - missing_module_1
-                - unsupported_product
-                - unsupported_meter_order
-                - duplicate_meter_order
-                - unsupported_meter
-                - out_of_period_meter_reading
-                - unsupported_meter_reading
-                - duplicate_meter_reading
-                - implausible_meter_reading
-                - duplicate_customer_email
-                - invalid_iban
-                - upgrade_api_version
-                - withdrawal_not_allowed
-                - invalid_termination_date
-                - subscription_not_started
-                example: invalid_type
-              field:
-                type: string
-                example: favoriteNumbers.1
-              message:
-                type: string
-                example: 'Invalid input: expected string, received number'
-            required:
-            - code
-            - field
-            - message
-          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
-      required:
-      - code
-      - message
-      - requestId
-      - docs
     ErrPaymentRequired:
       type: object
       properties:
@@ -1811,36 +1080,102 @@ components:
       - message
       - requestId
       - docs
-    TerminateSubscriptionResponse:
+    InsertAddress:
       type: object
       properties:
-        reason:
+        street:
+          type: string
+          minLength: 2
+          maxLength: 100
+          pattern: '[a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC]'
+          description: Street name of the address
+          example: Torstraße
+        house_number:
+          type: string
+          minLength: 1
+          maxLength: 10
+          pattern: ^[A-Za-z0-9\-/\s]+$
+          description: House number including any additions
+          example: '119'
+        zip:
+          type: string
+          minLength: 5
+          maxLength: 5
+          pattern: ^\d+$
+          description: ZIP/Postal code
+          example: '10115'
+        city:
+          type: string
+          minLength: 2
+          maxLength: 100
+          pattern: ^[^\d]*$
+          description: City name
+          example: Berlin
+      required:
+      - street
+      - house_number
+      - zip
+      - city
+      description: New billing address for the subscription
+    PaymentMethod:
+      type: object
+      properties:
+        object:
           type: string
           enum:
-          - ORDINARY
-          - MOVE_OUT
-          - WITHDRAWAL
-        intended_end_at:
+          - payment_method
+          description: Type of the object, always 'payment_method'
+        id:
           type: string
-          format: date-time
-          description: Customer-provided or system-calculated exclusive end timestamp at midnight Europe/Berlin. From this instant the customer is no longer supplied.
-          example: '2026-12-31T00:00:00+01:00'
+          description: Unique identifier for the payment method
+          example: pm_adc9utqqpcp7tx054l7vg56s2
+        type:
+          type: string
+          enum:
+          - sepa_debit
+          description: Type of payment method - Currently only SEPA direct debit is supported
+          example: sepa_debit
+        sepa_debit:
+          type: object
+          properties:
+            iban:
+              type: string
+              description: International Bank Account Number (IBAN) for SEPA direct debit, partially masked for security
+              example: DE************6485
+            account_holder:
+              type: string
+              minLength: 1
+              description: Full legal name of the bank account holder as registered with the bank
+              example: John Doe
+          required:
+          - iban
+          - account_holder
+        created_at:
+          anyOf:
+          - type: string
+          - type: string
+            format: date-time
+          description: Timestamp when the payment method was created
+          example: '2024-03-14T12:00:00Z'
       required:
-      - reason
-      - intended_end_at
-    ErrConflict:
+      - object
+      - id
+      - type
+      - sepa_debit
+      - created_at
+    ErrMethodNotAllowed:
       type: object
       properties:
         code:
           type: string
           enum:
-          - CONFLICT
+          - METHOD_NOT_ALLOWED
           description: The error code related to the status code.
-          example: CONFLICT
+          example: METHOD_NOT_ALLOWED
         message:
           type: string
           description: A human readable message describing the issue.
-          example: Resource already exists
+          example: Method not allowed
         requestId:
           type: string
           description: The request id to be used for debugging and error reporting.
@@ -1848,7 +1183,7 @@ components:
         docs:
           type: string
           description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/CONFLICT
+          example: https://docs.nomos.energy/api-references/errors/METHOD_NOT_ALLOWED
         errors:
           type: array
           items:
@@ -1980,82 +1315,36 @@ components:
       - message
       - requestId
       - docs
-    ErrForbidden:
+    UpdateSubscription:
       type: object
       properties:
-        code:
-          type: string
-          enum:
-          - FORBIDDEN
-          description: The error code related to the status code.
-          example: FORBIDDEN
-        message:
-          type: string
-          description: A human readable message describing the issue.
-          example: You are not allowed to access this resource
-        requestId:
-          type: string
-          description: The request id to be used for debugging and error reporting.
-          example: 37a04f8f-e791-491c-81e1-86cd304649bb
-        docs:
-          type: string
-          description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/FORBIDDEN
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                enum:
-                - invalid_type
-                - too_big
-                - too_small
-                - invalid_format
-                - not_multiple_of
-                - unrecognized_keys
-                - invalid_union
-                - invalid_key
-                - invalid_element
-                - invalid_value
-                - custom
-                - unserviceable_zip
-                - ended_subscription
-                - duplicate_grid_reduction
-                - missing_smart_meter
-                - missing_module_1
-                - unsupported_product
-                - unsupported_meter_order
-                - duplicate_meter_order
-                - unsupported_meter
-                - out_of_period_meter_reading
-                - unsupported_meter_reading
-                - duplicate_meter_reading
-                - implausible_meter_reading
-                - duplicate_customer_email
-                - invalid_iban
-                - upgrade_api_version
-                - withdrawal_not_allowed
-                - invalid_termination_date
-                - subscription_not_started
-                example: invalid_type
-              field:
-                type: string
-                example: favoriteNumbers.1
-              message:
-                type: string
-                example: 'Invalid input: expected string, received number'
-            required:
-            - code
-            - field
-            - message
-          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
-      required:
-      - code
-      - message
-      - requestId
-      - docs
+        billing_address:
+          $ref: '#/components/schemas/InsertAddress'
+        payment_method:
+          $ref: '#/components/schemas/InsertPaymentMethod'
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+          description: 'Key-based metadata update. Keys sent here are merged onto the stored metadata; set a key to `null` to remove it. Send `metadata: null` to clear every key. Omit the field to leave the metadata unchanged. The resulting metadata is restricted to 10KB.'
+          example:
+            utm_source: google
+            utm_campaign: campaign_name
+            user_id: '1234567890'
+      example:
+        billing_address:
+          street: Torstraße
+          house_number: '119'
+          zip: '10115'
+          city: Berlin
+        payment_method:
+          type: sepa_debit
+          sepa_debit:
+            iban: DE68500105178297336485
+            account_holder: John Doe
+        metadata:
+          user_id: '1234567890'
     InsertCompanyCustomer:
       type: object
       properties:
@@ -2135,19 +1424,133 @@ components:
       - last_name
       - email
       title: Person
-    ErrUnprocessableEntity:
+    Subscription:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - subscription
+          description: Type of the object, always 'subscription'
+        id:
+          type: string
+          description: Unique identifier for the subscription
+          example: sub_rocbrf1u5e48mm0reeqoag90
+        plan:
+          type: string
+          description: ID of the plan
+          example: pln_ctj3tjzc7dywznuw1dy80lb3
+        customer:
+          $ref: '#/components/schemas/Customer'
+        address:
+          $ref: '#/components/schemas/Address'
+        meter:
+          $ref: '#/components/schemas/Meter'
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+        supplier:
+          $ref: '#/components/schemas/Supplier'
+        number:
+          type:
+          - string
+          - 'null'
+          description: Human-readable identifier for the subscription
+          example: 4X44EMKX
+        status:
+          type: string
+          enum:
+          - pending
+          - active
+          - ended
+          description: Status of the subscription
+          example: active
+        estimated_usage:
+          type: number
+          description: Estimated yearly usage in kWh, provided by the customer in the checkout.
+        created_at:
+          anyOf:
+          - type: string
+          - type: string
+            format: date-time
+          description: Timestamp when the subscription was created
+          example: '2024-03-14T12:00:00Z'
+        updated_at:
+          anyOf:
+          - type: string
+          - type: string
+            format: date-time
+          description: Timestamp when the subscription was updated
+          example: '2024-03-14T12:00:00Z'
+        start_at:
+          anyOf:
+          - type: string
+          - type: string
+            format: date-time
+          - {}
+          description: Timestamp when delivery was started / will start
+          example: '2024-03-14T12:00:00Z'
+        terminated_at:
+          anyOf:
+          - type: string
+          - type: string
+            format: date-time
+          - {}
+          description: Timestamp when delivery was terminated
+          example: '2024-03-14T12:00:00Z'
+        end_at:
+          anyOf:
+          - type: string
+          - type: string
+            format: date-time
+          - {}
+          description: Timestamp when the subscription was ended / will end
+          example: '2024-03-14T12:00:00Z'
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: {}
+          description: Metadata of the subscription. Store any type of information, custom to your needs. E.g. the `user_id` of your in-house user. Restricted to 10KB.
+          example:
+            utm_source: google
+            utm_campaign: campaign_name
+            user_id: '1234567890'
+        type:
+          type: string
+          enum:
+          - consumption
+          - feed_in
+          description: Whether the subscription covers electricity consumption or feed-in. Feed-in subscriptions are only available from the 2026-05-27.curie API version onwards.
+          example: consumption
+        billing_address:
+          $ref: '#/components/schemas/Address'
+      required:
+      - object
+      - id
+      - plan
+      - customer
+      - address
+      - meter
+      - payment_method
+      - status
+      - estimated_usage
+      - created_at
+      - updated_at
+      - type
+      - billing_address
+    ErrUnauthorized:
       type: object
       properties:
         code:
           type: string
           enum:
-          - UNPROCESSABLE_ENTITY
+          - UNAUTHORIZED
           description: The error code related to the status code.
-          example: UNPROCESSABLE_ENTITY
+          example: UNAUTHORIZED
         message:
           type: string
           description: A human readable message describing the issue.
-          example: 'invalid_enum_value in ''status'': Invalid enum value. Expected ''pending'' | ''active'' | ''ended'''
+          example: Invalid or malformed token
         requestId:
           type: string
           description: The request id to be used for debugging and error reporting.
@@ -2155,7 +1558,7 @@ components:
         docs:
           type: string
           description: The docs related to the error code.
-          example: https://docs.nomos.energy/api-references/errors/UNPROCESSABLE_ENTITY
+          example: https://docs.nomos.energy/api-references/errors/UNAUTHORIZED
         errors:
           type: array
           items:
@@ -2211,6 +1614,461 @@ components:
       - message
       - requestId
       - docs
+    InsertPaymentMethod:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - sepa_debit
+          description: Type of payment method
+          example: sepa_debit
+        sepa_debit:
+          type: object
+          properties:
+            iban:
+              type: string
+              pattern: ^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$
+              description: IBAN number
+              example: DE68500105178297336485
+            account_holder:
+              type: string
+              minLength: 1
+              description: Name of the account holder
+              example: John Doe
+          required:
+          - iban
+          - account_holder
+      required:
+      - type
+      - sepa_debit
+      description: Attach a new SEPA direct-debit mandate. The new payment method replaces the subscription's current mandate.
+    TerminateSubscription:
+      oneOf:
+      - type: object
+        properties:
+          reason:
+            type: string
+            enum:
+            - ORDINARY
+          intended_end_at:
+            type: string
+            format: date-time
+            description: Optional exclusive end timestamp. Must be exactly midnight Europe/Berlin (any zone offset accepted as long as the instant is 00:00 Berlin). From that moment the customer is no longer supplied; the last day of supply is the day before. When omitted, the plan's cancellation period applies.
+            example: '2026-12-31T00:00:00+01:00'
+        required:
+        - reason
+      - type: object
+        properties:
+          reason:
+            type: string
+            enum:
+            - MOVE_OUT
+          intended_end_at:
+            type: string
+            format: date-time
+            description: Exclusive end timestamp for the move-out. Must be exactly midnight Europe/Berlin (any zone offset accepted as long as the instant is 00:00 Berlin). Mandatory for `MOVE_OUT`. Must respect the grid operator's working-day notice.
+            example: '2026-12-31T00:00:00+01:00'
+        required:
+        - reason
+        - intended_end_at
+      - type: object
+        properties:
+          reason:
+            type: string
+            enum:
+            - WITHDRAWAL
+        required:
+        - reason
+    ErrForbidden:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - FORBIDDEN
+          description: The error code related to the status code.
+          example: FORBIDDEN
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: You are not allowed to access this resource
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/FORBIDDEN
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrConflict:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - CONFLICT
+          description: The error code related to the status code.
+          example: CONFLICT
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Resource already exists
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/CONFLICT
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrTooManyRequests:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - TOO_MANY_REQUESTS
+          description: The error code related to the status code.
+          example: TOO_MANY_REQUESTS
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: Wait 30 seconds before retrying.
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/TOO_MANY_REQUESTS
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    ErrBadRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - BAD_REQUEST
+          description: The error code related to the status code.
+          example: BAD_REQUEST
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: 'invalid_type in ''end'': Required'
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/BAD_REQUEST
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    TerminateSubscriptionResponse:
+      type: object
+      properties:
+        reason:
+          type: string
+          enum:
+          - ORDINARY
+          - MOVE_OUT
+          - WITHDRAWAL
+        intended_end_at:
+          type: string
+          format: date-time
+          description: Customer-provided or system-calculated exclusive end timestamp at midnight Europe/Berlin. From this instant the customer is no longer supplied.
+          example: '2026-12-31T00:00:00+01:00'
+      required:
+      - reason
+      - intended_end_at
+    InsertMeter:
+      type: object
+      properties:
+        number:
+          type: string
+          minLength: 1
+          description: Meter identification number
+          example: 1APA0195124010
+        type:
+          type: string
+          enum:
+          - smart
+          - analog
+          description: Type of the meter. Must be 'smart' for feed-in plans
+          example: smart
+        estimated_usage:
+          type: number
+          minimum: 100
+          description: Estimated yearly consumption in kWh
+          example: 2500
+        malo:
+          type:
+          - string
+          - 'null'
+          description: Market Location Identifier (MaLo) for the meter
+          example: '50491310272'
+      required:
+      - number
+      - type
+      - estimated_usage
+    Supplier:
+      type:
+      - object
+      - 'null'
+      properties:
+        object:
+          type: string
+          enum:
+          - supplier
+          description: Type of the object, always 'supplier'
+        id:
+          type: string
+          description: Unique identifier for the supplier
+          example: mp_a0x6jm5h92wde6s5dnuvha4c
+        name:
+          type: string
+          minLength: 1
+          description: Name of the energy supplier
+          example: Sample Energy GmbH
+        country:
+          type: string
+          minLength: 2
+          maxLength: 2
+          description: Two-letter country code
+          example: DE
+        created_at:
+          anyOf:
+          - type: string
+          - type: string
+            format: date-time
+          description: Timestamp when the supplier was created
+          example: '2024-03-14T12:00:00Z'
+      required:
+      - object
+      - id
+      - name
+      - country
+      - created_at
     ErrInternalServerError:
       type: object
       properties:
@@ -2287,36 +2145,178 @@ components:
       - message
       - requestId
       - docs
-    UpdateSubscription:
+    Meter:
       type: object
       properties:
-        billing_address:
-          $ref: '#/components/schemas/InsertAddress'
-        payment_method:
-          $ref: '#/components/schemas/InsertPaymentMethod'
-        metadata:
+        object:
+          type: string
+          enum:
+          - meter
+          description: Type of the object, always 'meter'
+        id:
+          type: string
+          description: Unique identifier for the meter
+          example: mtr_tihqsqnxx3xs1gonbnk0ccou
+        melo:
           type:
-          - object
+          - string
           - 'null'
-          additionalProperties: {}
-          description: 'Key-based metadata update. Keys sent here are merged onto the stored metadata; set a key to `null` to remove it. Send `metadata: null` to clear every key. Omit the field to leave the metadata unchanged. The resulting metadata is restricted to 10KB.'
-          example:
-            utm_source: google
-            utm_campaign: campaign_name
-            user_id: '1234567890'
-      example:
-        billing_address:
-          street: Torstraße
-          house_number: '119'
-          zip: '10115'
-          city: Berlin
-        payment_method:
-          type: sepa_debit
-          sepa_debit:
-            iban: DE68500105178297336485
-            account_holder: John Doe
-        metadata:
-          user_id: '1234567890'
+          description: Metering Location ID
+          example: DE0000001234567890
+        number:
+          type: string
+          minLength: 1
+          description: Meter identification number
+          example: 1APA0195124010
+        type:
+          type: string
+          enum:
+          - smart
+          - analog
+          description: Type of the meter. Must be 'smart' for feed-in plans
+          example: smart
+        malo:
+          type:
+          - string
+          - 'null'
+          description: Market Location Identifier (MaLo) for the meter
+          example: '50491310272'
+        created_at:
+          anyOf:
+          - type: string
+          - type: string
+            format: date-time
+          description: Timestamp when the meter was created
+          example: '2024-03-14T12:00:00Z'
+      required:
+      - object
+      - id
+      - number
+      - type
+      - created_at
+    ErrUnprocessableEntity:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - UNPROCESSABLE_ENTITY
+          description: The error code related to the status code.
+          example: UNPROCESSABLE_ENTITY
+        message:
+          type: string
+          description: A human readable message describing the issue.
+          example: 'invalid_enum_value in ''status'': Invalid enum value. Expected ''pending'' | ''active'' | ''ended'''
+        requestId:
+          type: string
+          description: The request id to be used for debugging and error reporting.
+          example: 37a04f8f-e791-491c-81e1-86cd304649bb
+        docs:
+          type: string
+          description: The docs related to the error code.
+          example: https://docs.nomos.energy/api-references/errors/UNPROCESSABLE_ENTITY
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                enum:
+                - invalid_type
+                - too_big
+                - too_small
+                - invalid_format
+                - not_multiple_of
+                - unrecognized_keys
+                - invalid_union
+                - invalid_key
+                - invalid_element
+                - invalid_value
+                - custom
+                - unserviceable_zip
+                - ended_subscription
+                - duplicate_grid_reduction
+                - missing_smart_meter
+                - missing_module_1
+                - unsupported_product
+                - unsupported_meter_order
+                - duplicate_meter_order
+                - unsupported_meter
+                - out_of_period_meter_reading
+                - unsupported_meter_reading
+                - duplicate_meter_reading
+                - implausible_meter_reading
+                - duplicate_customer_email
+                - invalid_iban
+                - upgrade_api_version
+                - withdrawal_not_allowed
+                - invalid_termination_date
+                - subscription_not_started
+                example: invalid_type
+              field:
+                type: string
+                example: favoriteNumbers.1
+              message:
+                type: string
+                example: 'Invalid input: expected string, received number'
+            required:
+            - code
+            - field
+            - message
+          description: Per-field breakdown of a validation or business-rule failure. Omitted for API versions before the structured-errors cutoff.
+      required:
+      - code
+      - message
+      - requestId
+      - docs
+    Address:
+      type: object
+      properties:
+        object:
+          type: string
+          enum:
+          - address
+          description: Type of the object, always 'address'
+        id:
+          type: string
+          description: Unique identifier for the address
+          example: adr_mi4f0oda6x9m7gcsvjk0ole1
+        street:
+          type: string
+          minLength: 1
+          description: Street name of the address
+          example: Torstraße
+        house_number:
+          type: string
+          minLength: 1
+          description: House number including any additions
+          example: '119'
+        zip:
+          type: string
+          minLength: 5
+          description: ZIP/Postal code
+          example: '10115'
+        city:
+          type: string
+          minLength: 1
+          description: City name
+          example: Berlin
+        created_at:
+          anyOf:
+          - type: string
+          - type: string
+            format: date-time
+          description: Timestamp when the address was created
+          example: '2024-03-14T12:00:00Z'
+      required:
+      - object
+      - id
+      - street
+      - house_number
+      - zip
+      - city
+      - created_at
   securitySchemes:
     Bearer:
       type: http
