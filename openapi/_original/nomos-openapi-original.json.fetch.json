@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.nomos.energy/openapi/openapi.curie.json",
+ "requested_url": "https://docs.nomos.energy/openapi/openapi.curie.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 323019,
+ "sha256": "efcbdcc6fa5bc48646cc398eb19b3268e4e295d9843522356d5455548103e23a",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
