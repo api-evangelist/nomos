@@ -64,6 +64,174 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Nomos is a company surfaced as a portfolio company of speedinvest and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Nomos runs a whitelabel (embedded) energy platform for the German market: partners sell dynamic, EPEX-spot electricity plans under their own brand while Nomos, a licensed and regulated electricity retailer, handles customer onboarding, supplier switching, smart-meter (iMSys) orders, §14a EnWG grid-fee reductions, dynamic pricing, metering, billing and solar feed-in compensation behind a single REST API. The API (api.nomos.energy) uses OAuth 2.0 with read:*/write:* scopes, dated X-API-Version releases, cursor pagination, bracket-notation filtering, a structured error envelope and signed webhooks, plus hosted checkout and customer-portal surfaces.
 
-Backed by: speedinvest
+**Areas:** Company · Energy · Electricity · Utilities · Embedded Finance · Dynamic Pricing · Billing · Metering · Smart Meter · Germany · Authentication · Webhook
+
+## Nomos on APIs.io
+
+Everything profiled for Nomos is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/nomos/](https://apis.io/providers/nomos/)** — or go straight to one of the APIs or properties below.
+
+### APIs (12)
+
+- [Nomos Authentication API](https://apis.io/apis/nomos/nomos-authentication-api/) — The Authentication API from Nomos — 3 operation(s) for authentication.
+- [Nomos Customers API](https://apis.io/apis/nomos/nomos-customers-api/) — The Customers API from Nomos — 2 operation(s) for customers.
+- [Nomos Events API](https://apis.io/apis/nomos/nomos-events-api/) — The Events API from Nomos — 1 operation(s) for events.
+- [Nomos Grid Fee Reductions API](https://apis.io/apis/nomos/nomos-grid-fee-reductions-api/) — The Grid Fee Reductions API from Nomos — 2 operation(s) for grid fee reductions.
+- [Nomos Invoices API](https://apis.io/apis/nomos/nomos-invoices-api/) — The Invoices API from Nomos — 3 operation(s) for invoices.
+- [Nomos Leads API](https://apis.io/apis/nomos/nomos-leads-api/) — The Leads API from Nomos — 2 operation(s) for leads.
+- [Nomos Market Partners API](https://apis.io/apis/nomos/nomos-market-partners-api/) — The Market Partners API from Nomos — 1 operation(s) for market partners.
+- [Nomos Plans API](https://apis.io/apis/nomos/nomos-plans-api/) — The Plans API from Nomos — 3 operation(s) for plans.
+- [Nomos Prices API](https://apis.io/apis/nomos/nomos-prices-api/) — The Prices API from Nomos — 1 operation(s) for prices.
+- [Nomos Smart Meter Orders API](https://apis.io/apis/nomos/nomos-smart-meter-orders-api/) — The Smart Meter Orders API from Nomos — 2 operation(s) for smart meter orders.
+- [Nomos Subscriptions API](https://apis.io/apis/nomos/nomos-subscriptions-api/) — The Subscriptions API from Nomos — 3 operation(s) for subscriptions.
+- [Nomos Usage API](https://apis.io/apis/nomos/nomos-usage-api/) — The Usage API from Nomos — 3 operation(s) for usage.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Nomos Webhooks](https://apis.io/asyncapis/nomos/nomos-webhooks-asyncapi/)
+
+#### Event channels (19)
+
+Individual events and webhooks the provider emits.
+
+- [invoice.created](https://apis.io/channels/nomos/invoice-created/)
+- [invoice.paid](https://apis.io/channels/nomos/invoice-paid/)
+- [invoice.payment_failed](https://apis.io/channels/nomos/invoice-payment-failed/)
+- [invoice.uncollectible](https://apis.io/channels/nomos/invoice-uncollectible/)
+- [invoice.voided](https://apis.io/channels/nomos/invoice-voided/)
+- [meter_order.activated](https://apis.io/channels/nomos/meter-order-activated/)
+- [meter_order.blocked](https://apis.io/channels/nomos/meter-order-blocked/)
+- [meter_order.cancelled](https://apis.io/channels/nomos/meter-order-cancelled/)
+- [meter_order.check_reviewed](https://apis.io/channels/nomos/meter-order-check-reviewed/)
+- [meter_order.check_submitted](https://apis.io/channels/nomos/meter-order-check-submitted/)
+- [meter_order.created](https://apis.io/channels/nomos/meter-order-created/)
+- [meter_order.installed](https://apis.io/channels/nomos/meter-order-installed/)
+- [meter_order.placed](https://apis.io/channels/nomos/meter-order-placed/)
+- [meter_order.scheduled](https://apis.io/channels/nomos/meter-order-scheduled/)
+- [subscription.activated](https://apis.io/channels/nomos/subscription-activated/)
+- [subscription.confirmed](https://apis.io/channels/nomos/subscription-confirmed/)
+- [subscription.created](https://apis.io/channels/nomos/subscription-created/)
+- [subscription.ended](https://apis.io/channels/nomos/subscription-ended/)
+- [subscription.terminated](https://apis.io/channels/nomos/subscription-terminated/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [nomos](https://apis.io/servers/nomos/nomos/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Nomos Agentic Access](https://apis.io/agentic-access/nomos/nomos-agentic-access/)
+
+#### Collections (12)
+
+Postman and Open Collection request collections.
+
+- [Nomos Authentication API](https://apis.io/collections/nomos/open-nomos-authentication-api/)
+- [Nomos Authentication Customers API](https://apis.io/collections/nomos/open-nomos-customers-api/)
+- [Nomos Authentication Events API](https://apis.io/collections/nomos/open-nomos-events-api/)
+- [Nomos Authentication Grid Fee Reductions API](https://apis.io/collections/nomos/open-nomos-grid-fee-reductions-api/)
+- [Nomos Authentication Invoices API](https://apis.io/collections/nomos/open-nomos-invoices-api/)
+- [Nomos Authentication Leads API](https://apis.io/collections/nomos/open-nomos-leads-api/)
+- [Nomos Authentication Market Partners API](https://apis.io/collections/nomos/open-nomos-market-partners-api/)
+- [Nomos Authentication Plans API](https://apis.io/collections/nomos/open-nomos-plans-api/)
+- [Nomos Authentication Prices API](https://apis.io/collections/nomos/open-nomos-prices-api/)
+- [Nomos Authentication Smart Meter Orders API](https://apis.io/collections/nomos/open-nomos-smart-meter-orders-api/)
+- [Nomos Authentication Subscriptions API](https://apis.io/collections/nomos/open-nomos-subscriptions-api/)
+- [Nomos Authentication Usage API](https://apis.io/collections/nomos/open-nomos-usage-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Nomos Openapi Overlay](https://apis.io/overlays/nomos/nomos-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Nomos Authentication](https://apis.io/security/nomos/nomos-authentication/)
+- [Nomos Domain Security](https://apis.io/security/nomos/nomos-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Nomos Scopes](https://apis.io/scopes/nomos/nomos-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.nomos.energy/en/)
+- [Documentation](https://docs.nomos.energy)
+- [Getting started](https://docs.nomos.energy/quickstart)
+- [API reference](https://docs.nomos.energy/api-references/introduction)
+- [Sign up](https://dashboard.nomos.energy/login)
+- [Blog](https://www.nomos.energy/blog)
+- [Privacy policy](https://www.nomos.energy/en/privacy)
+
+## API Evangelist rating
+
+**Kin Score 44.0** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 57.5 |
+| Contract governance | 18.2 |
+| Operational transparency | 31.6 |
+| Developer ergonomics | 59.5 |
+| Access clarity | 10.5 |
+
+**Agent readiness 34.0** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 31.1** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/nomos/](https://apis.io/providers/nomos/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Nomos: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/nomos/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
